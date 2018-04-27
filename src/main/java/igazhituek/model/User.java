@@ -42,4 +42,13 @@ public class User implements Serializable {
     public enum Role {
         USER, ADMIN, BANNED, GUEST
     }
+    private String denomination;
+    
+    private int age;
+    
+    private String aboutMe;
+    
+    private String whereFrom;
+    
+    private String sex;
 }
