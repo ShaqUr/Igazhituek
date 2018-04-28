@@ -60,6 +60,7 @@ public class UserApiController {
     
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
+        System.out.println("JÓÓÓÓÓ");
         try {
             return ResponseEntity.ok(userService.login(user));
         } catch (UserNotValidException e) {
@@ -91,8 +92,12 @@ public class UserApiController {
         this.userService.setUser(null);
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping("/register")
+    
+    @GetMapping("/lol")
+    public ResponseEntity<String> lol(){
+        return ResponseEntity.ok("lefutottam");
+    }
+    
     public ResponseEntity<User> register(@RequestBody User user) {
         try{
             return ResponseEntity.ok(userService.register(user));
