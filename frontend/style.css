@@ -32,7 +32,7 @@ body {
 }
 
 .card h1::after {
-    content: ',';
+    content: ', ';
 }
 
 .card h2 {
@@ -42,4 +42,8 @@ body {
 .card h3 {
     display: block;
     font-size: 1em;
+}
+
+.hidden {
+    visibility: hidden;
 }

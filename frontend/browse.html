@@ -129,9 +129,17 @@
 
         <script>
             window.onload = function () {
+                getMyData();
+
+                getUsers();
+
                 document.getElementById('dislike').onclick = function() {
                     var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
+
+                    if(cards.length == 1) {
+                        hideButtons();
+                    }
 
                     lastCard.className += " left";
                 };
@@ -139,51 +147,68 @@
                     var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
 
+                    if(cards.length == 1) {
+                        hideButtons();
+                    }
+
                     lastCard.className += " right";
                 };
-
-                var json = `
-                    [
-                        {
-                            "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
-                            "name": "Erzsi",
-                            "age": 45,
-                            "denomination": "Katolikus"
-                        },
-                        {
-                            "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
-                            "name": "Joli",
-                            "age": 69,
-                            "denomination": "Baptista"
-                        }
-                    ]`;
-
-                getUsers(json);
             };
 
-            function getUsers(json) {
-                var users = JSON.parse(json);
+            function hideButtons() {
+                document.getElementById('dislike').className = 'hidden';
+                document.getElementById('like').className = 'hidden';
+            }
 
-                var root = document.createDocumentFragment();
-                for(let user of users) {
-                    let li = document.createElement('li');
-                    li.className = 'card';
+            function getUsers() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 /*&& this.status == 200*/) {
+                        var users = JSON.parse(this.responseText);
 
-                    li.appendChild(document.createElement('img'));
-                    li.lastChild.src = user.image;
+                        var root = document.createDocumentFragment();
+                        for(let user of users) {
+                            let li = document.createElement('li');
+                            li.className = 'card';
+                            li.dataset.id = user.id;
 
-                    li.appendChild(document.createElement('div'));
-                    li.lastChild.appendChild(document.createElement('h1'));
-                    li.lastChild.lastChild.appendChild(document.createTextNode(user.name));
-                    li.lastChild.appendChild(document.createElement('h2'));
-                    li.lastChild.lastChild.appendChild(document.createTextNode(user.age));
-                    li.lastChild.appendChild(document.createElement('h3'));
-                    li.lastChild.lastChild.appendChild(document.createTextNode(user.denomination));
+                            li.appendChild(document.createElement('img'));
+                            li.lastChild.src = user.image;
 
-                    root.appendChild(li);
-                }
+                            li.appendChild(document.createElement('div'));
+                            li.lastChild.appendChild(document.createElement('h1'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.name));
+                            li.lastChild.appendChild(document.createElement('h2'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.age));
+                            li.lastChild.appendChild(document.createElement('h3'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.denomination));
 
-                document.getElementById('cards').appendChild(root);
+                            li.addEventListener('transitionend', function() {
+                                this.parentNode.removeChild(this);
+                            }, { once: true });
+
+                            root.appendChild(li);
+                        }
+
+                        document.getElementById('cards').appendChild(root);
+                    }
+                };
+                xhttp.open("GET", "users.json", true);
+                xhttp.send();
+            }
+
+            function getMyData() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 /*&& this.status == 200*/) {
+                        var data = JSON.parse(this.responseText);
+
+                        document.querySelector('#my_data img').src = data.image;
+                        document.querySelector('#my_data h1').innerHTML = data.name;
+                    }
+                };
+                xhttp.open("GET", "user.json", true);
+                xhttp.send();
             }
         </script>
     </head>
