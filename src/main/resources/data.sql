@@ -1,0 +1,1 @@
+INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (0, 'NIGGER VAGYOK', 20, 'katolikus', 'nigger@gmail.com', 'asdf1234', 'USER', 'MALE', 'niggerkiraly', 'Wakanda');
