@@ -36,6 +36,7 @@ public class UserService {
     
     public User login(User user) throws UserNotValidException {
         if (isValid(user)) {
+            setLoggedIn(user);
             return this.user = userRepository.findByUsername(user.getUsername()).get();
         }
         throw new UserNotValidException();

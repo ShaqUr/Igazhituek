@@ -1,10 +1,11 @@
 <!doctype html>
 <html>
     <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+</script>
         <title>Keresztyén társkereső - Bejelentkezés</title>
 
         <link href="https://fonts.googleapis.com/css?family=Cinzel|Lato&amp;subset=latin-ext" rel="stylesheet">
-
         <style>
             body {
                 background: rgb(137, 57, 94);
@@ -68,11 +69,11 @@
         </style>
     </head>
     <body>
-        <form>
+        <form name = "loginForm" onsubmit="return validateForm()">
             <h1>Keresztyén társkereső</h1>
             <label>
                 Felhasználónév
-                <input>
+				<input type="text" name="fname">
             </label>
             <label>
                 Jelszó
@@ -82,3 +83,14 @@
         </form>
     </body>
 </html>
+<script>
+	$.ajax({
+        type: "GET",
+        url: "localhost:8080/api/user/login",
+        data:"name=" + "lol" + "pws=" + "lololol",
+        dataType: "text/html;charset=utf-8",
+        success: function(msg) {
+            console.log(msg);
+        }
+    });
+</script>
