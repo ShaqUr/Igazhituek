@@ -3,7 +3,7 @@
     <head>
         <title>Keresztyén társkereső - Bejelentkezés</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Cinzel|Lato&amp;subset=latin-ext" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
 
         <style>
             html, body {
@@ -13,8 +13,6 @@
 
             body {
                 display: table;
-                margin: 0;
-                font-family: Lato;
                 background: #eee;
             }
 
@@ -30,22 +28,29 @@
             }
 
             #my_data {
-                display: table;
+                display: flex;
+                align-items: center;
                 width: 100%;
             }
 
             #my_data>* {
-                display: table-cell;
                 vertical-align: middle;
             }
 
             #my_data img {
-                height: 100%;
+                height: 3.5em;
                 width: auto;
+                margin-right: 1em;
             }
 
             #my_data h1 {
                 margin: 0;
+                font-size: 1.5em;
+            }
+
+            #my_data a {
+                font-size: 1em;
+                color: #fff;
             }
 
             aside>a {
@@ -62,6 +67,7 @@
                 background: #fff;
                 color: #000;
                 padding: 1em;
+                text-align: justify;
             }
 
             #quote>* {
@@ -97,16 +103,6 @@
             }
 
             #cards li {
-                display: flex;
-                border: 1px solid #ccc;
-                width: 20em;
-                height: 32em;
-                border-radius: 1em;
-                padding: 1em;
-                flex-direction: column;
-                text-align: left;
-                background: #fff;
-                box-shadow: 0 0 1em rgba(0,0,0,.1);
                 position: absolute;
                 box-sizing: border-box;
                 transition-duration: 250ms;
@@ -114,64 +110,81 @@
                 transition-property: left, right, opacity;
                 left: 0;
                 right: 0;
-                pointer-events: none;
             }
 
             #cards li.left {
                 left: auto;
                 right: 100%;
                 opacity: 0;
+                pointer-events: none;
             }
 
             #cards li.right {
                 right: auto;
                 left: 100%;
                 opacity: 0;
-            }
-
-            #cards img {
-                width: 100%;
-                border: 0;
-                background: #ccc;
-                flex-grow: 1;
-                margin-bottom: .5em;
-            }
-
-            #cards div>* {
-                font-size: 1.5em;
-                margin: 0;
-                display: inline;
-            }
-
-            #cards h1::after {
-                content: ',';
-            }
-
-            #cards h2 {
-                font-weight: normal;
-            }
-
-            #cards h3 {
-                display: block;
-                font-size: 1em;
+                pointer-events: none;
             }
         </style>
 
         <script>
             window.onload = function () {
                 document.getElementById('dislike').onclick = function() {
-                    var cards = document.getElementById('cards').getElementsByClassName('shown');
+                    var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
 
-                    lastCard.className = "left";
+                    lastCard.className += " left";
                 };
                 document.getElementById('like').onclick = function() {
-                    var cards = document.getElementById('cards').getElementsByClassName('shown');
+                    var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
 
-                    lastCard.className = "right";
+                    lastCard.className += " right";
                 };
+
+                var json = `
+                    [
+                        {
+                            "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
+                            "name": "Erzsi",
+                            "age": 45,
+                            "denomination": "Katolikus"
+                        },
+                        {
+                            "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
+                            "name": "Joli",
+                            "age": 69,
+                            "denomination": "Baptista"
+                        }
+                    ]`;
+
+                getUsers(json);
             };
+
+            function getUsers(json) {
+                var users = JSON.parse(json);
+
+                var root = document.createDocumentFragment();
+                for(let user of users) {
+                    let li = document.createElement('li');
+                    li.className = 'card';
+
+                    li.appendChild(document.createElement('img'));
+                    li.lastChild.src = user.image;
+
+                    li.appendChild(document.createElement('div'));
+                    li.lastChild.appendChild(document.createElement('h1'));
+                    li.lastChild.lastChild.appendChild(document.createTextNode(user.name));
+                    li.lastChild.appendChild(document.createElement('h2'));
+                    li.lastChild.lastChild.appendChild(document.createTextNode(user.age));
+                    li.lastChild.appendChild(document.createElement('h3'));
+                    li.lastChild.lastChild.appendChild(document.createTextNode(user.denomination));
+
+                    root.appendChild(li);
+                }
+
+                document.getElementById('cards').appendChild(root);
+            }
         </script>
     </head>
     <body>
@@ -181,45 +194,21 @@
                     <img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
                 </div>
                 <div>
-                    <h1>Nev</h1>
-                    <a href="#">Profil szerk</a>
+                    <h1>Név</h1>
+                    <a href="edit.html?id=1">Profil szerkesztése</a>
                 </div>
             </div>
-            <a href="#">Uzeneteim</a>
-            <a href="#">Beallitasok</a>
-            <h2>Napi Szentiras</h2>
+            <a href="#">Üzeneteim</a>
+            <a href="#">Beállítások</a>
+            <h2>Napi Szentírás</h2>
             <div id="quote">
-                <h3>Janos 3:16</h3>
-                <p>Mert ugy szerette</p>
+                <h3>János 3:16</h3>
+                <p>Mert úgy szerette Isten a világot, hogy egyszülött Fiát adta, hogy aki hisz őbenne, el ne vesszen, hanem örök élete legyen.</p>
             </div>
         </aside>
         <main>
             <button id="dislike">Balra</button>
             <ul id="cards">
-                <li class="shown">
-                    <img src="https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485">
-                    <div>
-                        <h1>Erzsebet</h1>
-                        <h2>45</h2>
-                        <h3>Katolikus</h3>
-                    </div>
-                </li>
-                <li class="shown">
-                    <img src="https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485">
-                    <div>
-                        <h1>Erzsebet</h1>
-                        <h2>45</h2>
-                        <h3>Katolikus</h3>
-                    </div>
-                </li>
-                <li class="shown">
-                    <img src="https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485">
-                    <div>
-                        <h1>Erzsebet</h1>
-                        <h2>45</h2>
-                        <h3>Katolikus</h3>
-                    </div>
-                </li>
             </ul>
             <button id="like">Jobbra</button>
         </main>

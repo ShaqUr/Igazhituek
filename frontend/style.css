@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin-ext');
+
+body {
+    background: #eee;
+    margin: 0;
+    font-family: Lato, sans-sarif;
+}
+
+.card {
+    display: flex;
+    border: 1px solid #ccc;
+    width: 20em;
+    height: 32em;
+    border-radius: 1em;
+    padding: 1em;
+    flex-direction: column;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 0 1em rgba(0,0,0,.1);
+}
+
+.card img {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: .5em;
+}
+
+.card div>* {
+    font-size: 1.5em;
+    margin: 0;
+    display: inline;
+}
+
+.card h1::after {
+    content: ',';
+}
+
+.card h2 {
+    font-weight: normal;
+}
+
+.card h3 {
+    display: block;
+    font-size: 1em;
+}
