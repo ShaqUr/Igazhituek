@@ -2,14 +2,14 @@
     {
         "id": 4,
         "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
-        "name": "Erzsi",
+        "name": "Juci",
         "age": 45,
         "denomination": "Katolikus"
     },
     {
         "id": 5,
-        "image": "https://cdn.shopify.com/s/files/1/1395/5529/t/12/assets/description_image_rubies%20044.jpg?6996473565380636485",
-        "name": "Joli",
+        "image": "http://njszt.hu/sites/default/files/ggombos.jpg",
+        "name": "Szandi",
         "age": 69,
         "denomination": "Baptista"
     }

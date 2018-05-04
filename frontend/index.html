@@ -69,28 +69,37 @@
         </style>
     </head>
     <body>
-        <form name = "loginForm" onsubmit="return validateForm()">
+        <form id="login_form">
             <h1>Keresztyén társkereső</h1>
             <label>
                 Felhasználónév
-				<input type="text" name="fname">
+				<input type="text" name="username">
             </label>
             <label>
                 Jelszó
-                <input type="password">
+                <input type="password" name="password">
             </label>
             <input type="submit" value="Bejelentkezés">
         </form>
     </body>
 </html>
 <script>
-	$.ajax({
-        type: "GET",
-        url: "localhost:8080/api/user/login",
-        data:"name=" + "lol" + "pws=" + "lololol",
-        dataType: "text/html;charset=utf-8",
-        success: function(msg) {
-            console.log(msg);
-        }
-    });
+	document.getElementById("login_form").addEventListener('submit', function(e) {
+		e.preventDefault();
+	
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4) {
+				if(this.status == 200) {
+					document.location = 'browse.html';
+				}
+				else {
+					alert('nincs ilyen felh');
+				}
+			}
+		};
+		xhttp.open("POST", "http://157.181.164.88:8080/api/user/login", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send('{"username":"' + this.elements['username'].value + '","password":"' + this.elements['password'].value + '"}');
+	});
 </script>

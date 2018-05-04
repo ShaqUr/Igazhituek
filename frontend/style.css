@@ -6,6 +6,18 @@ body {
     font-family: Lato, sans-sarif;
 }
 
+textarea, input, select {
+	font: inherit;
+}
+
+textarea:focus, input:focus, select:focus {
+	outline: none;
+}
+
+/*
+ *	CARD
+ */
+
 .card {
     display: flex;
     border: 1px solid #ccc;
@@ -46,4 +58,62 @@ body {
 
 .hidden {
     visibility: hidden;
+}
+
+/*
+ *	ASIDE
+ */
+ 
+aside {
+	background: rgb(137, 57, 94);
+	color: #fff;    
+	padding: 1em;
+	flex-basis: 20%;
+}
+
+#my_data {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#my_data>* {
+	vertical-align: middle;
+}
+
+#my_data img {
+	height: 3.5em;
+	width: auto;
+	margin-right: 1em;
+}
+
+#my_data h1 {
+	margin: 0;
+	font-size: 1.5em;
+}
+
+#my_data a {
+	font-size: 1em;
+	color: #fff;
+}
+
+aside>a {
+	display: block;
+	background: hsl(332, 41%, 28%);
+	padding: .5em 1em;
+	border-radius: 1em;
+	margin: 1em 0;
+	text-decoration: none;
+	color: #fff;
+}
+
+#quote {
+	background: #fff;
+	color: #000;
+	padding: 1em;
+	text-align: justify;
+}
+
+#quote>* {
+	margin: 0;
 }

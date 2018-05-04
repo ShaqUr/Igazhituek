@@ -12,75 +12,15 @@
             }
 
             body {
-                display: table;
-                background: #eee;
-            }
-
-            body>* {
-                display: table-cell;
-            }
-
-            aside {
-                background: rgb(137, 57, 94);
-                color: #fff;    
-                padding: 1em;
-                width: 20%;
-            }
-
-            #my_data {
                 display: flex;
-                align-items: center;
-                width: 100%;
-            }
-
-            #my_data>* {
-                vertical-align: middle;
-            }
-
-            #my_data img {
-                height: 3.5em;
-                width: auto;
-                margin-right: 1em;
-            }
-
-            #my_data h1 {
-                margin: 0;
-                font-size: 1.5em;
-            }
-
-            #my_data a {
-                font-size: 1em;
-                color: #fff;
-            }
-
-            aside>a {
-                display: block;
-                background: hsl(332, 41%, 28%);
-                padding: .5em 1em;
-                border-radius: 1em;
-                margin: 1em 0;
-                text-decoration: none;
-                color: #fff;
-            }
-
-            #quote {
-                background: #fff;
-                color: #000;
-                padding: 1em;
-                text-align: justify;
-            }
-
-            #quote>* {
-                margin: 0;
+                background: #eee;
             }
             
             main {
-                text-align: center;
-                vertical-align: middle;
-            }
-
-            main>* {
-                vertical-align: middle;
+				align-items: center;
+                display: flex;
+				flex-grow: 1;
+				justify-content: center;
             }
 
             main>button {
@@ -127,6 +67,7 @@
             }
         </style>
 
+		<script src="script/login_check.js"></script>
         <script>
             window.onload = function () {
                 getMyData();
@@ -153,6 +94,17 @@
 
                     lastCard.className += " right";
                 };
+				
+				document.getElementById('logout_btn').onclick = function() {
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if(this.readyState == 4 && this.status == 200) {
+							document.location = 'index.html';
+						}
+					};
+					xhttp.open("GET", "http://157.181.164.88:8080/api/user/logout", true);
+					xhttp.send();
+				};
             };
 
             function hideButtons() {
@@ -223,8 +175,8 @@
                     <a href="edit.html?id=1">Profil szerkesztése</a>
                 </div>
             </div>
-            <a href="#">Üzeneteim</a>
-            <a href="#">Beállítások</a>
+            <a href="messages.html">Üzeneteim</a>
+            <a href="#" id="logout_btn">Kijelentkezés</a>
             <h2>Napi Szentírás</h2>
             <div id="quote">
                 <h3>János 3:16</h3>
