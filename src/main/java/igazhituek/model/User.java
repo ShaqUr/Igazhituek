@@ -10,6 +10,8 @@ package igazhituek.model;
  * @author Aram
  */
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,11 +34,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
     
-    @Column(nullable = false, unique = true)
     private String email;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
 
     public enum Role {
@@ -51,4 +51,10 @@ public class User implements Serializable {
     private String whereFrom;
     
     private String sex;
+    
+    @OneToMany
+    private List<User> likes = new ArrayList();
+   
+    @OneToMany
+    private List<User> dislikes = new ArrayList();
 }

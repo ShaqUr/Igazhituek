@@ -26,14 +26,19 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 @Data
 public class UserService {
+    
     @Autowired
     private UserRepository userRepository;
     private User user;
 
     public void setLoggedIn(User userLogged){
+        System.out.println(userRepository.findByUsername(userLogged.getUsername()).get());
         user=userRepository.findByUsername(userLogged.getUsername()).get();
     }
     
+    public User getLoggedIn(){
+        return user;
+    }
     public User login(User user) throws UserNotValidException {
         if (isValid(user)) {
             setLoggedIn(user);
@@ -55,6 +60,7 @@ public class UserService {
     }
 
     public boolean isValid(User user) {
+        System.out.println(user.getUsername());
         return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword()).isPresent();
     }
     public boolean isBanned(User user){

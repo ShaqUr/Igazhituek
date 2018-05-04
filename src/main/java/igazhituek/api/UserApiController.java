@@ -17,9 +17,11 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -88,7 +90,7 @@ public class UserApiController {
         }
     }
     @GetMapping("/logout")
-    public ResponseEntity logout(@RequestBody User user) {
+    public ResponseEntity logout() {
         this.userService.setUser(null);
         return ResponseEntity.ok().build();
     }
@@ -105,6 +107,26 @@ public class UserApiController {
             return ResponseEntity.badRequest().build();
         }
         
+    }
+    @GetMapping("/isloggedin")
+    public ResponseEntity<Boolean> isloggedin(User user){
+        return ResponseEntity.ok(userService.isLoggedIn());
+    }
+    
+    @PostMapping("/like")
+    @ResponseBody
+    public ResponseEntity<User> like (@RequestBody int id){
+        System.out.println(id);
+        User user = userService.getUserRepository().findById(id).get();
+        System.out.println(user);
+        userService.getLoggedIn().getLikes().add(user);
+        return ResponseEntity.ok(user);
+    }
+    
+    @PostMapping("/dislike")
+    public ResponseEntity<User> dislike (@RequestBody User user){
+        userService.getUser().getDislikes().add(user);
+        return ResponseEntity.ok(user);
     }
     
 }
