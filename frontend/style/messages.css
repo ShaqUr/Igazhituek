@@ -1,0 +1,115 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    background: #eee;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+#matches {
+    background: rgb(137, 57, 94);
+    color: #fff;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+#matches li {
+    display: inline-block;
+}
+
+#matches input {
+    display: none;
+}
+
+#matches label {
+    cursor: pointer;
+    display: block;
+    padding: 1em;
+    text-align: center;
+}
+
+#matches label:hover {
+    background: hsl(332, 41%, 28%);
+}
+
+#matches input:checked ~ label {
+    cursor: default;
+    font-weight: bold;
+    background: hsl(332, 41%, 28%);
+}
+
+#matches h1 {
+    font: inherit;
+    margin: 0;
+}
+
+#messages {
+    flex-grow: 1;
+    list-style-type: none;
+    margin: 0;
+    overflow: auto;
+    padding: 1em;
+}
+
+#messages li {
+    clear: both;
+    float: right;
+    margin-bottom: 1em;
+    padding: 0;
+    box-shadow: 0 0 1em rgba(0,0,0,.1);
+    background: rgba(0,0,0,.1);
+}
+
+#messages li:last-child {
+    margin: 0;
+}
+
+#messages li.received {
+    float: left;
+}
+
+#messages li p {
+    background: #fff;
+    margin: 0 0 1px 0;
+    padding: .5em 1em;
+}
+
+#messages li.received p:first-child {
+    border-top-right-radius: .5em;
+}
+
+#messages li p:last-child {
+    border-bottom-left-radius: .5em;
+    border-bottom-right-radius: .5em;
+}
+
+#messages li.sent p {
+    background: rgb(137, 57, 94);
+    color: #fff;
+    text-align: right;
+}
+
+#messages li.sent p:first-child {
+    border-top-left-radius: .5em;
+}
+
+form {
+    background: rgb(137, 57, 94);
+    display: flex;
+    padding: 1em;
+}
+
+textarea {
+    flex-grow: 1;
+    resize: none;
+}

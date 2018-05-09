@@ -98,7 +98,7 @@
 				}
 			}
 		};
-		xhttp.open("POST", "http://157.181.164.88:8080/api/user/login", true);
+		xhttp.open("POST", "http://localhost:8080/api/user/login", true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send('{"username":"' + this.elements['username'].value + '","password":"' + this.elements['password'].value + '"}');
 	});

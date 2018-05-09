@@ -5,117 +5,12 @@
 
         <link href="style.css" rel="stylesheet">
 
-        <style>
-            html, body {
-                height: 100%;
-                width: 100%;
-            }
-
-            body {
-                display: flex;
-                background: #eee;
-            }
-            
-			main {
-				display: flex;
-				flex-grow: 1;
-				flex-direction: column;
-			}
-			
-			#matches {
-				background: rgb(137, 57, 94);
-				color: #fff;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-				white-space: nowrap;
-			}
-			
-			#matches li {
-				cursor: pointer;
-				display: inline-block;
-				padding: 1em;
-				text-align: center;
-			}
-			
-			#matches li.selected {
-				cursor: default;
-				font-weight: bold;
-				background: hsl(332, 41%, 28%);
-			}
-			
-			#matches li:not(.selected):hover {
-				background: hsl(332, 41%, 28%);
-			}
-			
-			#matches h1 {
-				font: inherit;
-				margin: 0;
-			}
-			
-			#messages {
-				flex-grow: 1;
-				list-style-type: none;
-				margin: 0;
-				overflow: auto;
-				padding: 1em;
-			}
-			
-			#messages li {
-				clear: both;
-				float: right;
-				margin-bottom: 1em;
-				padding: 0;
-				box-shadow: 0 0 1em rgba(0,0,0,.1);
-				background: rgba(0,0,0,.1);
-			}
-			
-			#messages li:last-child {
-				margin: 0;
-			}
-			
-			#messages li.received {
-				float: left;
-			}
-			
-			#messages li p {
-				background: #fff;
-				margin: 0 0 1px 0;
-				padding: .5em 1em;
-			}
-			
-			#messages li.received p:first-child {
-				border-top-right-radius: .5em;
-			}
-			
-			#messages li p:last-child {
-				border-bottom-left-radius: .5em;
-				border-bottom-right-radius: .5em;
-			}
-			
-			#messages li.sent p {
-				background: rgb(137, 57, 94);
-				color: #fff;
-				text-align: right;
-			}
-			
-			#messages li.sent p:first-child {
-				border-top-left-radius: .5em;
-			}
-			
-			form {
-				background: rgb(137, 57, 94);
-				display: flex;
-				padding: 1em;
-			}
-			
-			textarea {
-				flex-grow: 1;
-				resize: none;
-			}
-        </style>
+        <link rel="stylesheet" href="style/messages.css">
 
 		<script src="script/login_check.js"></script>
+
+		<script src="script/messages.js"></script>
+
         <script>
 			onload = function () {				
 				document.getElementById('logout_btn').onclick = function() {
@@ -125,7 +20,7 @@
 							document.location = 'index.html';
 						}
 					};
-					xhttp.open("GET", "http://157.181.164.88:8080/api/user/logout", true);
+					xhttp.open("GET", "http://localhost:8080/api/user/logout", true);
 					xhttp.send();
 				};
             };
@@ -152,54 +47,6 @@
         </aside>
         <main>
             <ul id="matches">
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li class="selected">
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
-				<li>
-					<img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
-					<h1>Match</h1>
-				</li>
 			</ul>
 			<ul id="messages">
 				<li class="sent">
@@ -227,7 +74,7 @@
 					<p>ABC</p>
 				</li>
 			</ul>
-			<form>
+			<form id="new_message">
 				<textarea name="message"></textarea>
 				<input type="submit" value="Küldés">
 			</form>
