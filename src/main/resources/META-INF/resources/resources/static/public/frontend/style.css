@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin-ext');
+
+body {
+    background: #eee;
+    margin: 0;
+    font-family: Lato, sans-sarif;
+}
+
+textarea, input, select {
+	font: inherit;
+}
+
+textarea:focus, input:focus, select:focus {
+	outline: none;
+}
+
+/*
+ *	CARD
+ */
+
+.card {
+    display: flex;
+    border: 1px solid #ccc;
+    width: 20em;
+    height: 32em;
+    border-radius: 1em;
+    padding: 1em;
+    flex-direction: column;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 0 1em rgba(0,0,0,.1);
+}
+
+.card img {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: .5em;
+}
+
+.card div>* {
+    font-size: 1.5em;
+    margin: 0;
+    display: inline;
+}
+
+.card h1::after {
+    content: ', ';
+}
+
+.card h2 {
+    font-weight: normal;
+}
+
+.card h3 {
+    display: block;
+    font-size: 1em;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/*
+ *	ASIDE
+ */
+ 
+aside {
+	background: rgb(137, 57, 94);
+	color: #fff;    
+	padding: 1em;
+	flex-basis: 20%;
+}
+
+#my_data {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#my_data>* {
+	vertical-align: middle;
+}
+
+#my_data img {
+	height: 3.5em;
+	width: auto;
+	margin-right: 1em;
+}
+
+#my_data h1 {
+	margin: 0;
+	font-size: 1.5em;
+}
+
+#my_data a {
+	font-size: 1em;
+	color: #fff;
+}
+
+aside>a {
+	display: block;
+	background: hsl(332, 41%, 28%);
+	padding: .5em 1em;
+	border-radius: 1em;
+	margin: 1em 0;
+	text-decoration: none;
+	color: #fff;
+}
+
+#quote {
+	background: #fff;
+	color: #000;
+	padding: 1em;
+	text-align: justify;
+}
+
+#quote>* {
+	margin: 0;
+}

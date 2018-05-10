@@ -29,6 +29,7 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+    
     private User user;
 
     public void setLoggedIn(User userLogged){
@@ -42,7 +43,8 @@ public class UserService {
     public User login(User user) throws UserNotValidException {
         if (isValid(user)) {
             setLoggedIn(user);
-            return this.user = userRepository.findByUsername(user.getUsername()).get();
+            System.out.println("loginbe :" + this);
+            return this.user;
         }
         throw new UserNotValidException();
     }
@@ -73,6 +75,7 @@ public class UserService {
         return userRepository.findByEmail(user.getEmail()).isPresent();
     }
     public boolean isLoggedIn() {
+        System.out.println(user != null);
         return user != null;
     }
     public boolean isUserLoggedIn(String username){

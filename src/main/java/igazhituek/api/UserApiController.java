@@ -8,33 +8,31 @@ package igazhituek.api;
 import igazhituek.exceptions.UserNotValidException;
 import igazhituek.exceptions.UsernameOrEmailInUseException;
 import igazhituek.model.User;
-import static igazhituek.model.User.Role.ADMIN;
-import static igazhituek.model.User.Role.USER;
 import igazhituek.service.UserService;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Aram
  */
+
 @RestController
 @RequestMapping("/api/user")
 public class UserApiController {
-
-    private final UserService userService;
     
     @Autowired
+    private final UserService userService;
+    
     public UserApiController(UserService userService) {
         this.userService = userService;
     }
@@ -62,11 +60,14 @@ public class UserApiController {
     
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
-        System.out.println("JÓÓÓÓÓ");
+        System.out.println("login");
         try {
             return ResponseEntity.ok(userService.login(user));
         } catch (UserNotValidException e) {
             return ResponseEntity.badRequest().build();
+        }
+        finally{
+            System.out.println("felhasznalo: " + userService.getUser());
         }
     }
     @PostMapping("/bann")
@@ -108,11 +109,13 @@ public class UserApiController {
         }
         
     }
+    
     @GetMapping("/isloggedin")
-    public ResponseEntity<Boolean> isloggedin(User user){
+    public ResponseEntity<Boolean> isloggedin(){
+        System.out.println(userService);
         return ResponseEntity.ok(userService.isLoggedIn());
     }
-    
+    /*
     @PostMapping("/like")
     @ResponseBody
     public ResponseEntity<User> like (@RequestBody int id){
@@ -128,5 +131,5 @@ public class UserApiController {
         userService.getUser().getDislikes().add(user);
         return ResponseEntity.ok(user);
     }
-    
+    */
 }

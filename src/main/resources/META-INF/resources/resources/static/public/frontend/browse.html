@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Keresztyén társkereső - Bejelentkezés</title>
+
+        <link href="style.css" rel="stylesheet">
+
+        <style>
+            html, body {
+                height: 100%;
+                width: 100%;
+            }
+
+            body {
+                display: flex;
+                background: #eee;
+            }
+            
+            main {
+				align-items: center;
+                display: flex;
+				flex-grow: 1;
+				justify-content: center;
+            }
+
+            main>button {
+                height: 5em;
+                width: 5em;
+                border-radius: 50%;
+                -webkit-appearance: none;
+                border: 0;
+                cursor: pointer;
+                font: inherit;
+            }
+
+            #cards {
+                position: relative;
+                width: 20em;
+                height: 32em;
+                display: inline-block;
+                margin: 1em;
+                padding: 0;
+            }
+
+            #cards li {
+                position: absolute;
+                box-sizing: border-box;
+                transition-duration: 250ms;
+                transition-timing-function: ease-in;
+                transition-property: left, right, opacity;
+                left: 0;
+                right: 0;
+            }
+
+            #cards li.left {
+                left: auto;
+                right: 100%;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            #cards li.right {
+                right: auto;
+                left: 100%;
+                opacity: 0;
+                pointer-events: none;
+            }
+        </style>
+
+		<script src="script/login_check.js"></script>
+        <script>
+            window.onload = function () {
+                getMyData();
+
+                getUsers();
+
+                document.getElementById('dislike').onclick = function() {
+                    var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
+                    var lastCard = cards[cards.length - 1];
+
+                    if(cards.length == 1) {
+                        hideButtons();
+                    }
+
+                    lastCard.className += " left";
+                };
+                document.getElementById('like').onclick = function() {
+                    var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
+                    var lastCard = cards[cards.length - 1];
+
+                    if(cards.length == 1) {
+                        hideButtons();
+                    }
+
+                    lastCard.className += " right";
+                };
+				
+				document.getElementById('logout_btn').onclick = function() {
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if(this.readyState == 4 && this.status == 200) {
+							document.location = 'index.html';
+						}
+					};
+					xhttp.open("GET", "http://localhost:8080/api/user/logout", true);
+					xhttp.send();
+				};
+            };
+
+            function hideButtons() {
+                document.getElementById('dislike').className = 'hidden';
+                document.getElementById('like').className = 'hidden';
+            }
+
+            function getUsers() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 /*&& this.status == 200*/) {
+                        var users = JSON.parse(this.responseText);
+
+                        var root = document.createDocumentFragment();
+                        for(let user of users) {
+                            let li = document.createElement('li');
+                            li.className = 'card';
+                            li.dataset.id = user.id;
+
+                            li.appendChild(document.createElement('img'));
+                            li.lastChild.src = user.image;
+
+                            li.appendChild(document.createElement('div'));
+                            li.lastChild.appendChild(document.createElement('h1'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.name));
+                            li.lastChild.appendChild(document.createElement('h2'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.age));
+                            li.lastChild.appendChild(document.createElement('h3'));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.denomination));
+
+                            li.addEventListener('transitionend', function() {
+                                this.parentNode.removeChild(this);
+                            }, { once: true });
+
+                            root.appendChild(li);
+                        }
+
+                        document.getElementById('cards').appendChild(root);
+                    }
+                };
+                xhttp.open("GET", "users.json", true);
+                xhttp.send();
+            }
+
+            function getMyData() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 /*&& this.status == 200*/) {
+                        var data = JSON.parse(this.responseText);
+
+                        document.querySelector('#my_data img').src = data.image;
+                        document.querySelector('#my_data h1').innerHTML = data.name;
+                    }
+                };
+                xhttp.open("GET", "user.json", true);
+                xhttp.send();
+            }
+        </script>
+    </head>
+    <body>
+        <aside>
+            <div id="my_data">
+                <div>
+                    <img src="https://avatars1.githubusercontent.com/u/22823703?s=40&v=4">
+                </div>
+                <div>
+                    <h1>Név</h1>
+                    <a href="edit.html?id=1">Profil szerkesztése</a>
+                </div>
+            </div>
+            <a href="messages.html">Üzeneteim</a>
+            <a href="#" id="logout_btn">Kijelentkezés</a>
+            <h2>Napi Szentírás</h2>
+            <div id="quote">
+                <h3>János 3:16</h3>
+                <p>Mert úgy szerette Isten a világot, hogy egyszülött Fiát adta, hogy aki hisz őbenne, el ne vesszen, hanem örök élete legyen.</p>
+            </div>
+        </aside>
+        <main>
+            <button id="dislike">Balra</button>
+            <ul id="cards">
+            </ul>
+            <button id="like">Jobbra</button>
+        </main>
+    </body>
+</html>

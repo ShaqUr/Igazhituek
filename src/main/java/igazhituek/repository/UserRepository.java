@@ -18,8 +18,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-    
-    Optional <User> findById(int id);
+   
     
     Optional<User> findByRole(Role role);
     

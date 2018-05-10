@@ -1,4 +1,4 @@
-package igazhituek.kereszt;
+package igazhituek;
 
 import igazhituek.api.UserApiController;
 import org.springframework.boot.SpringApplication;

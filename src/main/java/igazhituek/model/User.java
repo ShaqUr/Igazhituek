@@ -9,11 +9,11 @@ package igazhituek.model;
  *
  * @author Aram
  */
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -22,11 +22,8 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity {
      
     @Column(nullable = false, unique = true)
     private String username;
@@ -51,10 +48,10 @@ public class User implements Serializable {
     private String whereFrom;
     
     private String sex;
-    
+    /*
     @OneToMany
     private List<User> likes = new ArrayList();
    
     @OneToMany
-    private List<User> dislikes = new ArrayList();
+    private List<User> dislikes = new ArrayList();*/
 }
