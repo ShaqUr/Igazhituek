@@ -48,10 +48,10 @@ public class User extends BaseEntity {
     private String whereFrom;
     
     private String sex;
-    /*
+    
     @OneToMany
     private List<User> likes = new ArrayList();
    
     @OneToMany
-    private List<User> dislikes = new ArrayList();*/
+    private List<User> dislikes = new ArrayList();
 }

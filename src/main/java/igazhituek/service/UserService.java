@@ -12,6 +12,7 @@ import static igazhituek.model.User.Role.BANNED;
 import static igazhituek.model.User.Role.USER;
 import igazhituek.repository.UserRepository;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +31,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    private User user;
-
-    public void setLoggedIn(User userLogged){
-        System.out.println(userRepository.findByUsername(userLogged.getUsername()).get());
-        user=userRepository.findByUsername(userLogged.getUsername()).get();
-    }
+    private LinkedList<User> users;
     
-    public User getLoggedIn(){
-        return user;
-    }
-    public User login(User user) throws UserNotValidException {
-        if (isValid(user)) {
-            setLoggedIn(user);
+    public User login(User userLogged) throws UserNotValidException {
+        if (isValid(userLogged)) {
+            User user = userRepository.findByUsername(userLogged.getUsername()).get();
+            if(users==null){
+                users = new LinkedList<>();
+            };
+            users.add(user);
+            System.out.println("userek szama :" + users.size());
             System.out.println("loginbe :" + this);
-            return this.user;
+            return user;
         }
         throw new UserNotValidException();
     }
@@ -53,10 +51,7 @@ public class UserService {
             throw new UsernameOrEmailInUseException();
         }else{
             user.setRole(USER);
-            this.user = userRepository.save(user);
-          //  UserName userName = new UserName();
-            //userName.setName(user.getUsername());
-          //  userNameRepository.save(userName);
+            userRepository.save(user);
             return user;
         }
     }
@@ -74,13 +69,14 @@ public class UserService {
     public boolean isEmailInUse(User user){
         return userRepository.findByEmail(user.getEmail()).isPresent();
     }
-    public boolean isLoggedIn() {
-        System.out.println(user != null);
-        return user != null;
+    public boolean isLoggedIn(User checkUser) {
+        User user = userRepository.findByUsername(checkUser.getUsername()).get();
+        if (users.contains(user)){
+            return true;
+        }
+        return false;
     }
-    public boolean isUserLoggedIn(String username){
-        return user.getUsername().equals(username);
-    }
+    
     public Iterable<String> getUsernames(){
         Set<String> s=new HashSet<>();
         for(User u :this.userRepository.findAll()){
