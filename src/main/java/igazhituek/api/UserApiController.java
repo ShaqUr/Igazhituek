@@ -59,10 +59,10 @@ public class UserApiController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<Integer> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody User user) {
         System.out.println("login");
         try {
-            return ResponseEntity.ok(userService.login(user));
+            return ResponseEntity.ok(String.valueOf(userService.login(user)));
         } catch (UserNotValidException e) {
             return ResponseEntity.badRequest().build();
         }
