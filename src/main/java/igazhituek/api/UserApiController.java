@@ -133,7 +133,7 @@ public class UserApiController {
     }
     
     @PostMapping("/like")
-    public ResponseEntity<User> like (int userID, int likedId){
+    public ResponseEntity<User> like (Integer userID, Integer likedId){
         System.out.println(userID + " like: " + likedId);
         User loggedin = userService.getUserRepository().findById(userID).get();
         User user = userService.getUserRepository().findById(likedId).get();
@@ -141,15 +141,23 @@ public class UserApiController {
         loggedin.getLikes().add(user);
         return ResponseEntity.ok(user);
     }
-    /*
+    
+    
     @PostMapping("/notliked")
     public ResponseEntity<LinkedList<User>> getNotLiked(int userID){
         User user = userService.getUserRepository().findById(userID).get();
-        
-        List<User> list = new LinkedList<>();
-        userService.getUserRepository().findAll().iterator().forEachRemaining(list::add);
-        user.getLikes();    
-    } */
+        LinkedList<User> users = new LinkedList<>();
+        for(User u :  userService.getUserRepository().findAll()){
+            users.add(u);
+        }
+        for(User u : user.getLikes()){
+            users.remove(u);
+        }
+        for(User u : user.getDislikes()){
+            users.remove(u);
+        }
+        return ResponseEntity.ok(users);  
+    } 
     
     @PostMapping("/dislike")
     public ResponseEntity<User> dislike (int userID, int likedID){
