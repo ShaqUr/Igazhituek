@@ -54,4 +54,9 @@ public class User extends BaseEntity {
    
     @OneToMany
     private List<User> dislikes = new ArrayList();
+    
+    @Override
+    public int hashCode(){
+        return id;
+    }
 }

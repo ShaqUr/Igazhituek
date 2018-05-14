@@ -19,5 +19,5 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    protected int id;
 }

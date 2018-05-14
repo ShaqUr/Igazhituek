@@ -123,7 +123,10 @@ public class UserApiController {
     
     @GetMapping("/isloggedin")
     public ResponseEntity<Boolean> isloggedin(Integer id){
+        System.out.println("kapott ID: " + id);
+        System.out.println(userService.getUserRepository().findById(id).get());
         User u = userService.getUserRepository().findById(id).get();
+        System.out.println(userService.getUsers().contains(u));
         return ResponseEntity.ok(userService.getUsers().contains(u));
     }
     
