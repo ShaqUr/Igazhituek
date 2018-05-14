@@ -11,6 +11,8 @@ import igazhituek.model.User;
 import igazhituek.service.UserService;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -100,8 +102,8 @@ public class UserApiController {
     }
         
     @GetMapping("/logout")
-    public ResponseEntity logout(User user) {
-        User u = userService.getUserRepository().findByUsername(user.getUsername()).get();
+    public ResponseEntity logout(int id) {
+        User u = userService.getUserRepository().findById(id).get();
         System.out.println("kilep: " + u);
         this.userService.getUsers().remove(u);
         return ResponseEntity.ok().build();
@@ -124,28 +126,36 @@ public class UserApiController {
     @GetMapping("/isloggedin")
     public ResponseEntity<Boolean> isloggedin(Integer id){
         System.out.println("kapott ID: " + id);
-        System.out.println(userService.getUserRepository().findById(id).get());
+        //System.out.println(userService.getUserRepository().findById(id).get());
         User u = userService.getUserRepository().findById(id).get();
-        System.out.println(userService.getUsers().contains(u));
+        //System.out.println(userService.getUsers().contains(u));
         return ResponseEntity.ok(userService.getUsers().contains(u));
     }
     
     @PostMapping("/like")
-    public ResponseEntity<User> like (User loggedinUser, int id){
-        System.out.println(loggedinUser.getUsername() + "like: " + id);
-        User loggedin = userService.getUserRepository().findByUsername(loggedinUser.getUsername()).get();
-        User user = userService.getUserRepository().findById(id).get();
+    public ResponseEntity<User> like (int userID, int likedId){
+        System.out.println(userID + " like: " + likedId);
+        User loggedin = userService.getUserRepository().findById(userID).get();
+        User user = userService.getUserRepository().findById(likedId).get();
         System.out.println(user);
         loggedin.getLikes().add(user);
         return ResponseEntity.ok(user);
     }
-    
+    /*
+    @PostMapping("/notliked")
+    public ResponseEntity<LinkedList<User>> getNotLiked(int userID){
+        User user = userService.getUserRepository().findById(userID).get();
+        
+        List<User> list = new LinkedList<>();
+        userService.getUserRepository().findAll().iterator().forEachRemaining(list::add);
+        user.getLikes();    
+    } */
     
     @PostMapping("/dislike")
-    public ResponseEntity<User> dislike (User loggedinUser, int id){
-        System.out.println(loggedinUser.getUsername() + " dislike: " + id);
-        User loggedin = userService.getUserRepository().findByUsername(loggedinUser.getUsername()).get();
-        User user = userService.getUserRepository().findById(id).get();
+    public ResponseEntity<User> dislike (int userID, int likedID){
+        System.out.println(userID + " dislike: " + likedID);
+        User loggedin = userService.getUserRepository().findById(userID).get();
+        User user = userService.getUserRepository().findById(likedID).get();
         System.out.println(user);
         loggedin.getDislikes().add(user);
         return ResponseEntity.ok(user);
