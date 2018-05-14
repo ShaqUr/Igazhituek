@@ -156,6 +156,7 @@ public class UserApiController {
         for(User u : user.getDislikes()){
             users.remove(u);
         }
+        users.remove(user);
         return ResponseEntity.ok(users);  
     } 
     
