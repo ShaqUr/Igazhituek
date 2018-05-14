@@ -59,7 +59,7 @@ public class UserApiController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<Integer> login(@RequestBody User user) {
         System.out.println("login");
         try {
             return ResponseEntity.ok(userService.login(user));
@@ -70,6 +70,7 @@ public class UserApiController {
             System.out.println("felhasznalo: " + userService.getUsers());
         }
     }
+    
     /*
     @PostMapping("/bann")
     public ResponseEntity<String> bann(@RequestBody String username){
@@ -121,8 +122,8 @@ public class UserApiController {
     }
     
     @GetMapping("/isloggedin")
-    public ResponseEntity<Boolean> isloggedin(User user){
-        User u = userService.getUserRepository().findByUsername(user.getUsername()).get();
+    public ResponseEntity<Boolean> isloggedin(Integer id){
+        User u = userService.getUserRepository().findById(id).get();
         return ResponseEntity.ok(userService.getUsers().contains(u));
     }
     

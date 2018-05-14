@@ -33,7 +33,7 @@ public class UserService {
     
     private LinkedList<User> users;
     
-    public User login(User userLogged) throws UserNotValidException {
+    public Integer login(User userLogged) throws UserNotValidException {
         if (isValid(userLogged)) {
             User user = userRepository.findByUsername(userLogged.getUsername()).get();
             if(users==null){
@@ -42,7 +42,7 @@ public class UserService {
             users.add(user);
             System.out.println("userek szama :" + users.size());
             System.out.println("loginbe :" + this);
-            return user;
+            return user.getId();
         }
         throw new UserNotValidException();
     }
