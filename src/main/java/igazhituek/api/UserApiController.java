@@ -143,7 +143,7 @@ public class UserApiController {
     }
     
     
-    @PostMapping("/notliked")
+    @GetMapping("/notliked")
     public ResponseEntity<LinkedList<User>> getNotLiked(int userID){
         User user = userService.getUserRepository().findById(userID).get();
         LinkedList<User> users = new LinkedList<>();
@@ -161,7 +161,7 @@ public class UserApiController {
     } 
     
     @PostMapping("/dislike")
-    public ResponseEntity<User> dislike (int userID, int likedID){
+    public ResponseEntity<User> dislike (Integer userID, Integer likedID){
         System.out.println(userID + " dislike: " + likedID);
         User loggedin = userService.getUserRepository().findById(userID).get();
         User user = userService.getUserRepository().findById(likedID).get();

@@ -71,13 +71,23 @@
 		<script src="script/login_check.js"></script>
         <script>
             window.onload = function () {
-                getMyData();
+                //getMyData();
 
                 getUsers();
 
                 document.getElementById('dislike').onclick = function() {
                     var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
+                    
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            console.log(this.status, this.responseText);
+                        }
+                    };
+                    xhttp.open("POST", "http://localhost:8080/api/user/dislike", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send('userID=' + getCookie('userid') + '&likedId=' + lastCard.dataset.id);
 
                     if(cards.length == 1) {
                         hideButtons();
@@ -88,6 +98,16 @@
                 document.getElementById('like').onclick = function() {
                     var cards = document.getElementById('cards').querySelectorAll('.card:not(.left):not(.right)');
                     var lastCard = cards[cards.length - 1];
+                    
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4) {
+                                console.log(this.status, this.responseText);
+                            }
+                    };
+                    xhttp.open("POST", "http://localhost:8080/api/user/like", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send('userID=' + getCookie('userid') + '&likedId=' + lastCard.dataset.id);
 
                     if(cards.length == 1) {
                         hideButtons();
@@ -96,16 +116,16 @@
                     lastCard.className += " right";
                 };
 				
-				document.getElementById('logout_btn').onclick = function() {
-					var xhttp = new XMLHttpRequest();
-					xhttp.onreadystatechange = function() {
-						if(this.readyState == 4 && this.status == 200) {
-							document.location = 'index.html';
-						}
-					};
-					xhttp.open("GET", "http://localhost:8080/api/user/logout", true);
-					xhttp.send();
-				};
+                document.getElementById('logout_btn').onclick = function() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if(this.readyState == 4 && this.status == 200) {
+                                    document.location = 'index.html';
+                            }
+                        };
+                        xhttp.open("GET", "http://localhost:8080/api/user/logout", true);
+                        xhttp.send();
+                };
             };
 
             function hideButtons() {
@@ -116,7 +136,7 @@
             function getUsers() {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 /*&& this.status == 200*/) {
+                    if (this.readyState == 4 && this.status == 200) {
                         var users = JSON.parse(this.responseText);
 
                         var root = document.createDocumentFragment();
@@ -126,11 +146,11 @@
                             li.dataset.id = user.id;
 
                             li.appendChild(document.createElement('img'));
-                            li.lastChild.src = user.image;
+                            li.lastChild.src = '';//user.image;
 
                             li.appendChild(document.createElement('div'));
                             li.lastChild.appendChild(document.createElement('h1'));
-                            li.lastChild.lastChild.appendChild(document.createTextNode(user.name));
+                            li.lastChild.lastChild.appendChild(document.createTextNode(user.username));
                             li.lastChild.appendChild(document.createElement('h2'));
                             li.lastChild.lastChild.appendChild(document.createTextNode(user.age));
                             li.lastChild.appendChild(document.createElement('h3'));
@@ -146,7 +166,7 @@
                         document.getElementById('cards').appendChild(root);
                     }
                 };
-                xhttp.open("GET", "users.json", true);
+                xhttp.open("GET", "http://localhost:8080/api/user/notliked?userID=" + getCookie('userid'), true);
                 xhttp.send();
             }
 
