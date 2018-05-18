@@ -137,8 +137,10 @@ public class UserApiController {
         System.out.println(userID + " like: " + likedId);
         User loggedin = userService.getUserRepository().findById(userID).get();
         User user = userService.getUserRepository().findById(likedId).get();
-        System.out.println(user);
+        //System.out.println(user);
         loggedin.getLikes().add(user);
+        System.out.println(loggedin.getLikes().hashCode());
+        userService.getUserRepository().save(loggedin);
         return ResponseEntity.ok(user);
     }
     
@@ -151,6 +153,7 @@ public class UserApiController {
             users.add(u);
         }
         for(User u : user.getLikes()){
+            System.out.println("getlikesban vagyok bro");
             users.remove(u);
         }
         for(User u : user.getDislikes()){
@@ -161,12 +164,13 @@ public class UserApiController {
     } 
     
     @PostMapping("/dislike")
-    public ResponseEntity<User> dislike (Integer userID, Integer likedID){
-        System.out.println(userID + " dislike: " + likedID);
+    public ResponseEntity<User> dislike (Integer userID, Integer likedId){
+        System.out.println(userID + " dislike: " + likedId);
         User loggedin = userService.getUserRepository().findById(userID).get();
-        User user = userService.getUserRepository().findById(likedID).get();
+        User user = userService.getUserRepository().findById(likedId).get();
         System.out.println(user);
         loggedin.getDislikes().add(user);
+        userService.getUserRepository().save(loggedin);
         return ResponseEntity.ok(user);
     }
     
