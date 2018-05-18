@@ -5,7 +5,9 @@
  */
 package igazhituek.repository;
 
-import igazhituek.model.ChatMassage;
+import igazhituek.model.ChatMessage;
+import igazhituek.model.User;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,10 @@ import org.springframework.stereotype.Repository;
  * @author Aram
  */
 @Repository
-public interface ChatMassageRepository extends CrudRepository<ChatMassage, String>  {
+public interface ChatMessageRepository extends CrudRepository<ChatMessage, String>  {
+    Iterable<ChatMessage> findById(int id);
     
+    Iterable<ChatMessage> findBySenderAndReceiver(int sender, int receiver);
+
+    Iterable<ChatMessage> findAll();
 }

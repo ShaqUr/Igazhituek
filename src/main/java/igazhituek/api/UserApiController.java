@@ -9,19 +9,25 @@ import igazhituek.exceptions.UserNotValidException;
 import igazhituek.exceptions.UsernameOrEmailInUseException;
 import igazhituek.model.User;
 import igazhituek.service.UserService;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -60,11 +66,12 @@ public class UserApiController {
         return ResponseEntity.ok(userService.getUsernames());
     }
     
+    
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<User> login(@RequestBody User user) {
         System.out.println("login");
         try {
-            return ResponseEntity.ok(String.valueOf(userService.login(user)));
+            return ResponseEntity.ok(userService.login(user));
         } catch (UserNotValidException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -100,7 +107,20 @@ public class UserApiController {
             return ResponseEntity.badRequest().build();
         }
     }
-        
+    
+    @GetMapping("/matches")
+    public ResponseEntity<LinkedList<User>> mathces(Integer userID){
+        User u = userService.getUserRepository().findById(userID).get();
+        List<User> likes = u.getLikes();
+        LinkedList<User> matches = new LinkedList<>();
+        for(User usr : likes){
+            if(usr.getLikes().contains(u)){
+                matches.add(usr);
+            }
+        }
+        return ResponseEntity.ok(matches);
+    }
+    
     @GetMapping("/logout")
     public ResponseEntity logout(int id) {
         User u = userService.getUserRepository().findById(id).get();
@@ -143,8 +163,35 @@ public class UserApiController {
         userService.getUserRepository().save(loggedin);
         return ResponseEntity.ok(user);
     }
-    
-    
+   
+
+    @Autowired
+    private HttpServletRequest request;
+
+
+    @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
+        public
+        @ResponseBody
+        ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+            if (!file.isEmpty()) {
+                try {
+                    String uploadsDir = "/uploads/";
+                    String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+                    if(! new File(realPathtoUploads).exists())
+                    {
+                        new File(realPathtoUploads).mkdir();
+                    }
+                    String orgName = file.getOriginalFilename();
+                    String filePath = realPathtoUploads + orgName;
+                    File dest = new File(filePath);
+                    file.transferTo(dest);
+                }catch(IOException e){
+                    
+                }
+            }
+            return ResponseEntity.ok("");
+        }
+        
     @GetMapping("/notliked")
     public ResponseEntity<LinkedList<User>> getNotLiked(int userID){
         User user = userService.getUserRepository().findById(userID).get();

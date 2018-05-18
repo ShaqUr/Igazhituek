@@ -27,13 +27,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ChatMassage extends BaseEntity{
+public class ChatMessage extends BaseEntity{
     
-    String sender;
+    int sender;
     
-    String receiver;
+    int receiver;
     
     String message;
     
-    String timestampK;
+    int timestamp;
 }
