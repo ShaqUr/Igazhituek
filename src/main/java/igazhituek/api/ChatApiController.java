@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +34,7 @@ public class ChatApiController {
    
    @GetMapping("/messages")
    public ResponseEntity<List<ChatMessage>> messages(Integer sender, Integer receiver){
+       System.out.println(sender + " és " + receiver + " uzenetei");
        Iterable<ChatMessage> chatmesss = chatService.getChatRepository().findAll();
        List<ChatMessage> ret = new LinkedList<>();
        System.out.println("haliho");
@@ -41,9 +43,11 @@ public class ChatApiController {
                ret.add(ch);
            }
        }
-       //for(ChatMessage msg : senderMessages){
-           
-      // }
       return ResponseEntity.ok(ret);
+   }
+   
+   @PostMapping("/savemessage")
+   public ResponseEntity<Boolean> messages(Integer sender, Integer receiver, String Message){
+       return null;
    }
 }
