@@ -100,7 +100,7 @@
                 };
                 request.open("POST", "/api/user/register");
                 request.setRequestHeader("Content-type", "application/json");
-                request.send(obj);
+                request.send(JSON.stringify(obj));
             }
         </script>
     </head>
