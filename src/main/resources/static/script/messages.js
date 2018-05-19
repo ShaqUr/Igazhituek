@@ -7,7 +7,15 @@ window.addEventListener('load', function() {
 function submitMessage(e) {
     e.preventDefault();
 
-    // Send new message to server, get every message in reponse
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {       
+        if (this.readyState == 4 && this.status == 200) {
+            displayMessages(this.responseText);
+        }
+    };
+    xhttp.open("POST", "/api/chat/messages", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("sender=" + getCookie('userid') + '&receiver=' + document.querySelector('#matches input:checked').matchId + '&message=' + this.elements['message'].innerHTML);
 
     //displayMessages(messages);
 }
@@ -59,28 +67,47 @@ function getMatches() {
 
 function getMessages() {
     if(this.checked) {
-        var messages = document.getElementById('messages');
-        messages.innerHTML = '';
-
-        var fragment = document.createDocumentFragment();
-
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {       
             if (this.readyState == 4 && this.status == 200) {
-                var data = JSON.parse(this.responseText);
-
-                for(let message of data) {
-                    var li = document.createElement('li');
-
-                    console.log(message);
-
-                    fragment.appendChild(li);
-                }
-
-                messages.appendChild(fragment);
+                displayMessages(this.responseText);
             }
         };
         xhttp.open("GET", "/api/chat/messages?sender=" + getCookie('userid') + '&receiver=' + this.dataset.matchId, true);
         xhttp.send();
+    }
+}
+
+function displayMessages(data) {
+    var messages = document.getElementById('messages');
+    messages.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    var li = null;
+    var prevSender;
+    var data = JSON.parse(data);
+    if(data.length > 0) {
+        for(let message of data) {
+            if(prevSender !== undefined && prevSender != message.sender) {
+                fragment.appendChild(li);
+                li = null;
+            }
+            prevSender = message.sender;
+            if(li === null) {
+                li = document.createElement('li');
+                if(message.sender == getCookie('userid')) {
+                    li.className = 'sent';
+                }
+                else {
+                    li.className = 'received';
+                }
+            }
+
+            var p = document.createElement('p');
+            p.appendChild(document.createTextNode(message.message));
+
+            li.appendChild(p);
+        }
+        fragment.appendChild(li);
+        messages.appendChild(fragment);
     }
 }
