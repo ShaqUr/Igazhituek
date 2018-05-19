@@ -28,24 +28,20 @@ function getMatches() {
                 var input = document.createElement('input');
                 input.type = 'radio';
                 input.name = 'match';
-                input.id = 'match_selector_' + data.id;
-                input.dataset.matchId = data.id;
-                //if(i === 0) {
-                    input.checked = true;
-                    //getMessages.call(input);
-                //}
-                //input.addEventListener('change', getMessages);
+                input.id = 'match_selector_' + user.id;
+                input.dataset.matchId = user.id;
+                input.addEventListener('change', getMessages);
                 li.appendChild(input);
         
                 var label = document.createElement('label');
-                label.setAttribute('for', 'match_selector_' + data.id);
+                label.setAttribute('for', 'match_selector_' + user.id);
         
                 var img = document.createElement('img');
                 img.src = 'https://avatars1.githubusercontent.com/u/22823703?s=40&v=4';
                 label.appendChild(img);
         
                 var h1 = document.createElement('h1');
-                h1.appendChild(document.createTextNode(data.username));
+                h1.appendChild(document.createTextNode(user.username));
                 label.appendChild(h1);
         
                 li.appendChild(label);
@@ -63,17 +59,28 @@ function getMatches() {
 
 function getMessages() {
     if(this.checked) {
-        // get messages
+        var messages = document.getElementById('messages');
+        messages.innerHTML = '';
 
-        // displayMessages(messages)
-    }
-}
+        var fragment = document.createDocumentFragment();
 
-function displayMessages(messages) {
-    var messages = document.getElementById('messages');
-    messages.innerHTML = '';
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {       
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
 
-    for(var i = 0; i < 50; ++i) {
-        //disaply em
+                for(let message of data) {
+                    var li = document.createElement('li');
+
+                    console.log(message);
+
+                    fragment.appendChild(li);
+                }
+
+                messages.appendChild(fragment);
+            }
+        };
+        xhttp.open("GET", "/api/chat/messages?sender=" + getCookie('userid') + '&receiver=' + this.dataset.matchId, true);
+        xhttp.send();
     }
 }
