@@ -56,9 +56,9 @@ function getMatches() {
             matches.appendChild(fragment);
         }
     };
-    xhttp.open("POST", "/api/user/matches", true);
+    xhttp.open("GET", "/api/user/matches?userID=" + getCookie('userid'), true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send('userID=' + getCookie('userid'));
+    xhttp.send();
 }
 
 function getMessages() {
