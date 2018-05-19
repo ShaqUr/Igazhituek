@@ -84,7 +84,7 @@
                             console.log(this.status, this.responseText);
                         }
                     };
-                    xhttp.open("POST", "//api/user/dislike", true);
+                    xhttp.open("POST", "/api/user/dislike", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send('userID=' + getCookie('userid') + '&likedId=' + lastCard.dataset.id);
 
@@ -104,7 +104,7 @@
                                 console.log(this.status, this.responseText);
                             }
                     };
-                    xhttp.open("POST", "//api/user/like", true);
+                    xhttp.open("POST", "/api/user/like", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send('userID=' + getCookie('userid') + '&likedId=' + lastCard.dataset.id);
 
@@ -122,7 +122,7 @@
                                     document.location = 'index.html';
                             }
                         };
-                        xhttp.open("GET", "//api/user/logout", true);
+                        xhttp.open("GET", "/api/user/logout", true);
                         xhttp.send();
                 };
             };
@@ -165,7 +165,7 @@
                         document.getElementById('cards').appendChild(root);
                     }
                 };
-                xhttp.open("GET", "//api/user/notliked?userID=" + getCookie('userid'), true);
+                xhttp.open("GET", "/api/user/notliked?userID=" + getCookie('userid'), true);
                 xhttp.send();
             }
         </script>
