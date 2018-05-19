@@ -7,49 +7,42 @@
         <link href="https://fonts.googleapis.com/css?family=Cinzel|Lato&amp;subset=latin-ext" rel="stylesheet">
 
         <style>
-            html, body {
-                height: 100%;
-                width: 100%;
-            }
-
             body {
-                display: table;
-                margin: 0;
-                padding: 1em;
-                box-sizing: border-box;
+                background: rgb(137, 57, 94);
                 font-family: Lato;
             }
 
-            body>* {
-                display: table-cell;
-            }
+            form {
+                background: #fff;
+                box-shadow: 0 0 1000px hsl(332, 41%, 18%);
 
-            body>div {
-                background: rgb(137, 57, 94);
-                width: 25%;
-            }
+                border-radius: .5em;
 
-            body>form {
-                width: 75%;
-            }
+                padding: 2em;
 
-            form>div {
-                display: inline-block;
-                vertical-align: top;
-                width: 49%;
+                position: fixed;
+
+                top: 50%;
+                left: 50%;
+
+                transform: translate(-50%, -50%);
+                
+                text-align: center;
             }
 
             h1 {
                 margin: 0;
                 font-family: Cinzel;
+                text-align: center;
             }
 
             label {
                 display: block;
-                margin: 1em 0;
+                margin: 1em;
+                text-align: left;
             }
 
-            label input, select, textarea {
+            label input, label textarea {
                 background: #eee;
                 border-radius: 1em;
                 border: 0;
@@ -59,15 +52,28 @@
                 box-sizing: border-box;
             }
 
-            input, select {
+            input {
+                display: block;
                 font: inherit;
+            }
+
+            input[type=submit] {
+                margin: 2em auto 1em auto;
+                -webkit-appearance: none;
+                border: 0;
+                cursor: pointer;
+                padding: .5em;
+                border-radius: .5em;
+            }
+
+            input:focus {
+                outline: none;
             }
         </style>
     </head>
     <body>
         <form>
             <h1>Regisztráció</h1>
-            <div>
                 <label>
                     Név
                     <input>
@@ -88,8 +94,6 @@
                     Kép
                     <input type="file">
                 </label>
-            </div>
-            <div>
                 <label>
                     Felkezet
                     <select>
@@ -104,10 +108,7 @@
                     Bemutatkozás
                     <textarea></textarea>
                 </label>
-            </div>
+            <input type="submit" value="Ámen">
         </form>
-        <div>
-
-        </div>
     </body>
 </html>
