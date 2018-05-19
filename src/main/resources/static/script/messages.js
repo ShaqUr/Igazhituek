@@ -30,10 +30,10 @@ function getMatches() {
                 input.name = 'match';
                 input.id = 'match_selector_' + data.id;
                 input.dataset.matchId = data.id;
-                if(i === 0) {
+                //if(i === 0) {
                     input.checked = true;
                     //getMessages.call(input);
-                }
+                //}
                 //input.addEventListener('change', getMessages);
                 li.appendChild(input);
         
