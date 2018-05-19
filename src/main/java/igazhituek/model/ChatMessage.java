@@ -35,5 +35,5 @@ public class ChatMessage extends BaseEntity{
     
     String message;
     
-    int timestamp;
+    long timestamp;
 }

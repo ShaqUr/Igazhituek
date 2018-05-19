@@ -7,6 +7,7 @@ package igazhituek.api;
 
 import igazhituek.model.ChatMessage;
 import igazhituek.service.ChatService;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,14 @@ public class ChatApiController {
    }
    
    @PostMapping("/savemessage")
-   public ResponseEntity<Boolean> messages(Integer sender, Integer receiver, String Message){
-       return null;
+   public ResponseEntity<List<ChatMessage>> messages(Integer sender, Integer receiver, String message){
+       ChatMessage msg = new ChatMessage();
+       msg.setReceiver(receiver);
+       msg.setSender(sender);
+       msg.setMessage(message);
+       Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+       msg.setTimestamp(timestamp.getTime());
+       chatService.getChatRepository().save(msg);
+       return messages(sender, receiver);
    }
 }
