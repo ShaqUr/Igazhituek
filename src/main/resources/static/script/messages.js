@@ -13,9 +13,9 @@ function submitMessage(e) {
             displayMessages(this.responseText);
         }
     };
-    xhttp.open("POST", "/api/chat/messages", true);
+    xhttp.open("POST", "/api/chat/savemessage", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("sender=" + getCookie('userid') + '&receiver=' + document.querySelector('#matches input:checked').matchId + '&message=' + this.elements['message'].innerHTML);
+    xhttp.send("sender=" + getCookie('userid') + '&receiver=' + document.querySelector('#matches input:checked').dataset.matchId + '&message=' + this.elements['message'].value);
 
     //displayMessages(messages);
 }
