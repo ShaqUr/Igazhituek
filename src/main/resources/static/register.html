@@ -73,41 +73,59 @@
                 outline: none;
             }
         </style>
+        
+        <script>
+            function sendRegister(e) {
+                e.preventDefault();
+                var request = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        var data = JSON.parse(this.responseText);
+                        document.cookie = 'userid=' + data.id;
+                        document.cookie = 'username=' + data.username;
+                        document.location = 'browse.html';
+                    }
+                };
+                request.open("POST", "/api/user/register");
+                request.send(new FormData(this));
+            }
+        </script>
     </head>
     <body>
-        <form>
+        <form onsubmit="sendRegister(event)">
             <h1>Regisztráció</h1>
                 <label>
                     Név
-                    <input>
+                    <input name="username">
                 </label>
                 <label>
                     Születési dátum
-                    <input type="date">
+                    <input type="date" name="birth">
                 </label>
                 <label>
                     E-mail
-                    <input type="email">
+                    <input type="email" name="email">
                 </label>
                 <label>
                     Jelszó
-                    <input type="password">
+                    <input type="password" name="password">
                 </label>
                 <label>
                     Kép
-                    <input type="file">
+                    <input type="file" name="picture">
                 </label>
                 <label>
                     Felkezet
-                    <input>
+                    <input name="felekezet">
                 </label>
                 <label>
                     Foglalkozás
-                    <input>
+                    <input name="job">
                 </label>
                 <label>
                     Bemutatkozás
-                    <textarea></textarea>
+                    <textarea name="about"></textarea>
                 </label>
             <input type="submit" value="Ámen">
         </form>
