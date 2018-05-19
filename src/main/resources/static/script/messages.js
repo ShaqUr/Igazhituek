@@ -45,7 +45,7 @@ function getMatches() {
                 label.setAttribute('for', 'match_selector_' + user.id);
         
                 var img = document.createElement('img');
-                img.src = 'https://avatars1.githubusercontent.com/u/22823703?s=40&v=4';
+                img.src = user.base64;
                 label.appendChild(img);
         
                 var h1 = document.createElement('h1');
