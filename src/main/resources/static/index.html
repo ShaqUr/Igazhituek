@@ -25,6 +25,8 @@
                 left: 50%;
 
                 transform: translate(-50%, -50%);
+                
+                text-align: center;
             }
 
             h1 {
@@ -36,6 +38,7 @@
             label {
                 display: block;
                 margin: 1em;
+                text-align: left;
             }
 
             label input {
@@ -54,7 +57,7 @@
             }
 
             input[type=submit] {
-                margin: 2em auto 0 auto;
+                margin: 2em auto 1em auto;
                 -webkit-appearance: none;
                 border: 0;
                 cursor: pointer;
@@ -66,6 +69,8 @@
                 outline: none;
             }
         </style>
+
+        <script src="common.js"></script>
         
         <script>
             if(getCookie('userid') !== undefined) {
@@ -109,6 +114,7 @@
                 <input type="password" name="password">
             </label>
             <input type="submit" value="Bejelentkezés">
+            <a href="register.html">Regisztráció</a>
         </form>
     </body>
 </html>
