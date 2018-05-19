@@ -45,7 +45,7 @@
                 text-align: left;
             }
 
-            label input, label textarea {
+            label input, label textarea, label select {
                 background: #eee;
                 border-radius: 1em;
                 border: 0;
@@ -84,7 +84,7 @@
                         var data = JSON.parse(this.responseText);
                         document.cookie = 'userid=' + data.id;
                         document.cookie = 'username=' + data.username;
-                        document.location = 'browse.html';
+                        //document.location = 'browse.html';
                     }
                 };
                 request.open("POST", "/api/user/register");
@@ -100,8 +100,8 @@
                     <input name="username">
                 </label>
                 <label>
-                    Születési dátum
-                    <input type="date" name="birth">
+                    Életkor
+                    <input type="number" name="birth">
                 </label>
                 <label>
                     E-mail
@@ -120,8 +120,15 @@
                     <input name="felekezet">
                 </label>
                 <label>
-                    Foglalkozás
-                    <input name="job">
+                    Származás
+                    <input name="where">
+                </label>
+                <label>
+                    Nem
+                    <select name="sex">
+                        <option value="ferfi">Férfi</option>
+                        <option value="no">Nő</option>
+                    </select>
                 </label>
                 <label>
                     Bemutatkozás
