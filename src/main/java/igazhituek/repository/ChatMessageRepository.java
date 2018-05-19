@@ -17,9 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ChatMessageRepository extends CrudRepository<ChatMessage, String>  {
-    Iterable<ChatMessage> findById(int id);
+    Optional<ChatMessage> findById(int id);
     
-    Iterable<ChatMessage> findBySenderAndReceiver(int sender, int receiver);
+    Optional<ChatMessage> findBySenderAndReceiver(int sender, int receiver);
 
     Iterable<ChatMessage> findAll();
 }

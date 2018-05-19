@@ -7,7 +7,9 @@ package igazhituek.api;
 
 import igazhituek.model.ChatMessage;
 import igazhituek.service.ChatService;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +32,18 @@ public class ChatApiController {
    }
    
    @GetMapping("/messages")
-   public ResponseEntity<List<ChatMessage>> messages(Integer senderID, Integer receiverId){
-       Iterable senderMessages = chatService.getChatRepository().findBySenderAndReceiver(senderID, receiverId);
-       Iterable receiverMessages = chatService.getChatRepository().findBySenderAndReceiver(receiverId, senderID);
-       
+   public ResponseEntity<List<ChatMessage>> messages(Integer sender, Integer receiver){
+       Iterable<ChatMessage> chatmesss = chatService.getChatRepository().findAll();
+       List<ChatMessage> ret = new LinkedList<>();
+       System.out.println("haliho");
+       for(ChatMessage ch : chatmesss){
+           if((ch.getSender()==sender && ch.getReceiver()==receiver) || ch.getSender()==receiver && ch.getReceiver()==sender){
+               ret.add(ch);
+           }
+       }
        //for(ChatMessage msg : senderMessages){
            
       // }
-      return ResponseEntity.ok(null);
+      return ResponseEntity.ok(ret);
    }
 }

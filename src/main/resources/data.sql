@@ -1,3 +1,10 @@
-INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (0, 'NIGGER VAGYOK', 20, 'katolikus', 'nigger@gmail.com', 'asdf1234', 'USER', 'MALE', 'niggerkiraly', 'Wakanda');
-INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (1, 'NEM VAGYOK NIGGER ', 22, 'reformatus', 'nemnigger@gmail.com', 'asdf1234', 'USER', 'FEMALE', 'nemniggerkiraly', 'Róma');
-INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (2, 'METELT A FASZOM', 20, 'zsidó', 'jew@gmail.com', 'asdf1234', 'USER', 'MALE', 'zsidokiraly', 'Judapest');
+INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (0, 'Jehova 4ever brahs', 20, 'jehova', 'lokusguba@gmail.com', 'asdf1234', 'USER', 'MALE', 'sarkoziajoarc', 'Wakanda');
+INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (1, 'Luther Márton a zisten hatalmas forma', 22, 'reformatus', 'shaq@gmail.com', 'asdf1234', 'USER', 'MALE', 'Shaq', 'Kurdisztán');
+INSERT INTO USER (ID, ABOUt_ME, AGE, DENOMINATION, EMAIL, PASSWORD, ROLE, SEX, USERNAME, WHERE_FROM) VALUES (2, 'Csakis koscher csajok erdekelnek', 20, 'zsidó', 'jew@gmail.com', 'asdf1234', 'USER', 'MALE', 'Abraham', 'Izrael');
+
+
+INSERT INTO CHAT(ID, SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES (0, 0, 2, 'Szia fam!', 1526725639);
+INSERT INTO CHAT(ID, SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES (1, 2, 0, 'Szia! :)', 1526725644);
+INSERT INTO CHAT(ID, SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES (2, 0, 2, 'Hallotal-e mar Jehovarol?', 1526725649);
+INSERT INTO CHAT(ID, SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES (3, 2, 0, 'Persze de zsidó vagyok fam', 1526725655);
+INSERT INTO CHAT(ID, SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES (4, 0, 2, 'show boobs', 1526725659);

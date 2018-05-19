@@ -7,6 +7,8 @@ package igazhituek.api;
 
 import igazhituek.exceptions.UserNotValidException;
 import igazhituek.exceptions.UsernameOrEmailInUseException;
+import igazhituek.model.Dislikes;
+import igazhituek.model.Likes;
 import igazhituek.model.User;
 import igazhituek.service.UserService;
 import java.io.File;
@@ -75,9 +77,6 @@ public class UserApiController {
         } catch (UserNotValidException e) {
             return ResponseEntity.badRequest().build();
         }
-        finally{
-            System.out.println("felhasznalo: " + userService.getUsers());
-        }
     }
     
     /*
@@ -95,7 +94,7 @@ public class UserApiController {
     public ResponseEntity<User> changePassword(@RequestBody User user, String newpsw){
         try{
             userService.isValid(user);
-            if(this.userService.getUsers().contains(user)){
+            if(this.userService.isValid(user)){
                 User u = this.userService.getUserRepository().findByUsername(user.getUsername()).get();
                 u.setPassword(user.getPassword());
                 this.userService.getUserRepository().save(u);
@@ -108,26 +107,30 @@ public class UserApiController {
         }
     }
     
+    
     @GetMapping("/matches")
-    public ResponseEntity<LinkedList<User>> mathces(Integer userID){
+    public ResponseEntity<List<User>> mathces(Integer userID){
         User u = userService.getUserRepository().findById(userID).get();
-        List<User> likes = u.getLikes();
-        LinkedList<User> matches = new LinkedList<>();
-        for(User usr : likes){
-            if(usr.getLikes().contains(u)){
-                matches.add(usr);
+        List<User> wholikeduser = new LinkedList<>();
+        List<User> userLiked = new LinkedList<>();
+        for(Likes like : userService.getLikesRepository().findAll()){
+            if(like.getWho()==userID){
+                wholikeduser.add(userService.getUserRepository().findById(like.getLiker()).get());
             }
         }
-        return ResponseEntity.ok(matches);
+        for(Likes like : userService.getLikesRepository().findAll()){
+            if(like.getLiker()==userID){
+                userLiked.add(userService.getUserRepository().findById(like.getWho()).get());
+            }
+        }
+        for(User usr : wholikeduser){
+            if(!userLiked.contains(usr)){
+                wholikeduser.remove(usr);
+            }
+        }
+        return ResponseEntity.ok(wholikeduser);
     }
     
-    @GetMapping("/logout")
-    public ResponseEntity logout(int id) {
-        User u = userService.getUserRepository().findById(id).get();
-        System.out.println("kilep: " + u);
-        this.userService.getUsers().remove(u);
-        return ResponseEntity.ok().build();
-    }
     
     @GetMapping("/lol")
     public ResponseEntity<String> lol(){
@@ -143,25 +146,15 @@ public class UserApiController {
         
     }
     
-    @GetMapping("/isloggedin")
-    public ResponseEntity<Boolean> isloggedin(Integer id){
-        System.out.println("kapott ID: " + id);
-        //System.out.println(userService.getUserRepository().findById(id).get());
-        User u = userService.getUserRepository().findById(id).get();
-        //System.out.println(userService.getUsers().contains(u));
-        return ResponseEntity.ok(userService.getUsers().contains(u));
-    }
-    
+
     @PostMapping("/like")
-    public ResponseEntity<User> like (Integer userID, Integer likedId){
+    public ResponseEntity<String> like (Integer userID, Integer likedId){
         System.out.println(userID + " like: " + likedId);
-        User loggedin = userService.getUserRepository().findById(userID).get();
-        User user = userService.getUserRepository().findById(likedId).get();
-        //System.out.println(user);
-        loggedin.getLikes().add(user);
-        System.out.println(loggedin.getLikes().hashCode());
-        userService.getUserRepository().save(loggedin);
-        return ResponseEntity.ok(user);
+        Likes like = new Likes();
+        like.setLiker(userID);
+        like.setWho(likedId);
+        userService.getLikesRepository().save(like);
+        return ResponseEntity.ok("liked");
     }
    
 
@@ -191,35 +184,36 @@ public class UserApiController {
             }
             return ResponseEntity.ok("");
         }
-        
+       
     @GetMapping("/notliked")
-    public ResponseEntity<LinkedList<User>> getNotLiked(int userID){
+    public ResponseEntity<LinkedList<User>> getNotLiked(Integer userID){
         User user = userService.getUserRepository().findById(userID).get();
         LinkedList<User> users = new LinkedList<>();
         for(User u :  userService.getUserRepository().findAll()){
             users.add(u);
         }
-        for(User u : user.getLikes()){
-            System.out.println("getlikesban vagyok bro");
-            users.remove(u);
+        for(Likes like : userService.getLikesRepository().findAll()){
+            if(like.getLiker() == user.getId()){
+                users.remove(userService.getUserRepository().findById(like.getWho()).get());
+            }
         }
-        for(User u : user.getDislikes()){
-            users.remove(u);
+        for(Dislikes dislike : userService.getDislikesRepository().findAll()){
+            if(dislike.getDisliker() == user.getId()){
+                users.remove(userService.getUserRepository().findById(dislike.getWho()).get());
+            }
         }
         users.remove(user);
         return ResponseEntity.ok(users);  
     } 
     
     @PostMapping("/dislike")
-    public ResponseEntity<User> dislike (Integer userID, Integer likedId){
+    public ResponseEntity<String> dislike (Integer userID, Integer likedId){
         System.out.println(userID + " dislike: " + likedId);
-        User loggedin = userService.getUserRepository().findById(userID).get();
-        User user = userService.getUserRepository().findById(likedId).get();
-        System.out.println(user);
-        loggedin.getDislikes().add(user);
-        userService.getUserRepository().save(loggedin);
-        return ResponseEntity.ok(user);
+        Dislikes dislike = new Dislikes();
+        dislike.setDisliker(userID);
+        dislike.setWho(likedId);
+        userService.getDislikesRepository().save(dislike);
+        return ResponseEntity.ok("disliked");
     }
-    
     
 }

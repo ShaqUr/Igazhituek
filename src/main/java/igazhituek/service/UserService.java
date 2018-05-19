@@ -10,6 +10,8 @@ import igazhituek.exceptions.UsernameOrEmailInUseException;
 import igazhituek.model.User;
 import static igazhituek.model.User.Role.BANNED;
 import static igazhituek.model.User.Role.USER;
+import igazhituek.repository.DislikesRepository;
+import igazhituek.repository.LikesRepository;
 import igazhituek.repository.UserRepository;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -31,17 +33,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    private LinkedList<User> users;
+    @Autowired 
+    private LikesRepository likesRepository;
+    
+    @Autowired
+    private DislikesRepository dislikesRepository;
     
     public User login(User userLogged) throws UserNotValidException {
+        
         if (isValid(userLogged)) {
             User user = userRepository.findByUsername(userLogged.getUsername()).get();
-            if(users==null){
-                users = new LinkedList<>();
-            };
-            users.add(user);
-            System.out.println("userek szama :" + users.size());
-            System.out.println("loginbe :" + this);
             return user;
         }
         throw new UserNotValidException();
@@ -69,13 +70,7 @@ public class UserService {
     public boolean isEmailInUse(User user){
         return userRepository.findByEmail(user.getEmail()).isPresent();
     }
-    public boolean isLoggedIn(User checkUser) {
-        User user = userRepository.findByUsername(checkUser.getUsername()).get();
-        if (users.contains(user)){
-            return true;
-        }
-        return false;
-    }
+
     
     public Iterable<String> getUsernames(){
         Set<String> s=new HashSet<>();

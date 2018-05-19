@@ -49,12 +49,6 @@ public class User extends BaseEntity {
     
     private String sex;
     
-    @OneToMany
-    private List<User> likes = new ArrayList();
-   
-    @OneToMany
-    private List<User> dislikes = new ArrayList();
-    
     @Override
     public int hashCode(){
         return id;
