@@ -49,6 +49,9 @@ public class User extends BaseEntity {
     
     private String sex;
     
+    @Column(columnDefinition="TEXT")
+    private String base64;
+    
     @Override
     public int hashCode(){
         return id;

@@ -75,21 +75,26 @@
         </style>
         
         <script>
+            window.addEventListener('load', function () {
+                document.getElementById('form').addEventListener('submit', sendRegister);
+            });
+            
             function sendRegister(e) {
                 e.preventDefault();
+                console.log(this);
                 var obj = {
-                    username: this.elements['username'],
-                    birth: this.elements['birth'],
-                    email: this.elements['email'],
-                    password: this.elements['password'],
-                    //picture: this.elements['picture'],
-                    felekezet: this.elements['felekezet'],
-                    where: this.elements['where'],
-                    sex: this.elements['sex'],
-                    about: this.elements['about']
+                    username: this.elements['username'].value,
+                    birth: this.elements['birth'].value,
+                    email: this.elements['email'].value,
+                    password: this.elements['password'].value,
+                    picture: this.elements['picture'].value,
+                    felekezet: this.elements['felekezet'].value,
+                    where: this.elements['where'].value,
+                    sex: this.elements['sex'].value,
+                    about: this.elements['about'].value
                 };
                 var request = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
+                request.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         console.log(this.responseText);
                         var data = JSON.parse(this.responseText);
@@ -105,7 +110,7 @@
         </script>
     </head>
     <body>
-        <form onsubmit="sendRegister(event)">
+        <form id='form'>
             <h1>Regisztráció</h1>
                 <label>
                     Név

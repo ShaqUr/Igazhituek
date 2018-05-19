@@ -46,15 +46,7 @@ public class UserApiController {
     public UserApiController(UserService userService) {
         this.userService = userService;
     }
-    /*
-    @GetMapping
-    public ResponseEntity<User> user() {
-        if (userService.isLoggedIn()) {
-            return ResponseEntity.ok(userService.getUser());
-        }
-        return ResponseEntity.badRequest().build();
-    }
-*/
+    
     @PostMapping("search")
     public ResponseEntity<Iterable<String> > search(@RequestBody String username){
         try{
@@ -78,17 +70,6 @@ public class UserApiController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
-    /*
-    @PostMapping("/bann")
-    public ResponseEntity<String> bann(@RequestBody String username){
-        if(this.userService.getUser().getRole().equals(User.Role.ADMIN) && !username.equals(this.userService.getUser().getUsername())){
-            this.userService.bann(username);
-            return ResponseEntity.ok(username+" banned!");
-        }else{
-            return ResponseEntity.badRequest().build();
-        }
-    }*/
     
     @PostMapping("/changepassword")
     public ResponseEntity<User> changePassword(@RequestBody User user, String newpsw){
@@ -137,7 +118,21 @@ public class UserApiController {
         return ResponseEntity.ok("lefutottam");
     }
     
-    public ResponseEntity<User> register(@RequestBody User user) {
+    @PostMapping("/register")
+    public ResponseEntity<User> register(String username, String birth, String email, String password,  
+            String felekezet, String where, String sex, String about) {
+            User user = new User();
+            user.setUsername(username);
+            user.setAboutMe(about);
+            user.setPassword(password);
+            user.setEmail(email);
+            ///user.setBase64(picture);
+            System.out.println("BIRTH: " + birth);
+            user.setSex(sex);
+            user.setDenomination(felekezet);
+            user.setWhereFrom(where);
+            //System.out.println("kep: " + handleFileUpload(picture));
+            //user.setAge(birth);
         try{
             return ResponseEntity.ok(userService.register(user));
         }catch(UsernameOrEmailInUseException e){
@@ -160,30 +155,25 @@ public class UserApiController {
 
     @Autowired
     private HttpServletRequest request;
-
-
-    @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
-        public
-        @ResponseBody
-        ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-            if (!file.isEmpty()) {
-                try {
-                    String uploadsDir = "/uploads/";
-                    String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-                    if(! new File(realPathtoUploads).exists())
-                    {
-                        new File(realPathtoUploads).mkdir();
-                    }
-                    String orgName = file.getOriginalFilename();
-                    String filePath = realPathtoUploads + orgName;
-                    File dest = new File(filePath);
-                    file.transferTo(dest);
-                }catch(IOException e){
-                    
+    Boolean handleFileUpload(MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                String uploadsDir = "/uploads/";
+                String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
+                if(! new File(realPathtoUploads).exists())
+                {
+                    new File(realPathtoUploads).mkdir();
                 }
+                String orgName = file.getOriginalFilename();
+                String filePath = realPathtoUploads + orgName;
+                File dest = new File(filePath);
+                file.transferTo(dest);
+            }catch(IOException e){
+                return false;
             }
-            return ResponseEntity.ok("");
         }
+        return true;
+    }
        
     @GetMapping("/notliked")
     public ResponseEntity<LinkedList<User>> getNotLiked(Integer userID){
