@@ -11,7 +11,7 @@ window.addEventListener('load', function() {
                 document.location = 'index.html';
             }
         };
-        xhttp.open("GET", "/api/user/logout?id=" + getCookie(userid), true);
+        xhttp.open("GET", "/api/user/logout?id=" + getCookie('userid'), true);
         xhttp.send();
     };
 });
