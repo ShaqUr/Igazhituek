@@ -118,21 +118,31 @@ public class UserApiController {
         return ResponseEntity.ok("lefutottam");
     }
     
+    static class Model{
+        public String username;
+        public String picture;
+        public String birth;
+        public String email; 
+        public String password;  
+        public String felekezet; 
+        public String where; 
+        public String sex; 
+        public String about;
+    }
+    
     @PostMapping("/register")
-    public ResponseEntity<User> register(String username, String birth, String email, String password,  
-            String felekezet, String where, String sex, String about) {
+    public ResponseEntity<User> register(@RequestBody Model model) {
             User user = new User();
-            user.setUsername(username);
-            user.setAboutMe(about);
-            user.setPassword(password);
-            user.setEmail(email);
-            ///user.setBase64(picture);
-            System.out.println("BIRTH: " + birth);
-            user.setSex(sex);
-            user.setDenomination(felekezet);
-            user.setWhereFrom(where);
-            //System.out.println("kep: " + handleFileUpload(picture));
-            //user.setAge(birth);
+            user.setUsername(model.username);
+            user.setAboutMe(model.about);
+            user.setPassword(model.password);
+            user.setEmail(model.email);
+            user.setBase64(model.picture);
+            System.out.println("BIRTH: " + model.birth);
+            user.setSex(model.sex);
+            user.setDenomination(model.felekezet);
+            user.setWhereFrom(model.where);
+            user.setAge(Integer.parseInt(model.birth));
         try{
             return ResponseEntity.ok(userService.register(user));
         }catch(UsernameOrEmailInUseException e){
@@ -150,29 +160,6 @@ public class UserApiController {
         like.setWho(likedId);
         userService.getLikesRepository().save(like);
         return ResponseEntity.ok("liked");
-    }
-   
-
-    @Autowired
-    private HttpServletRequest request;
-    Boolean handleFileUpload(MultipartFile file) {
-        if (!file.isEmpty()) {
-            try {
-                String uploadsDir = "/uploads/";
-                String realPathtoUploads =  request.getServletContext().getRealPath(uploadsDir);
-                if(! new File(realPathtoUploads).exists())
-                {
-                    new File(realPathtoUploads).mkdir();
-                }
-                String orgName = file.getOriginalFilename();
-                String filePath = realPathtoUploads + orgName;
-                File dest = new File(filePath);
-                file.transferTo(dest);
-            }catch(IOException e){
-                return false;
-            }
-        }
-        return true;
     }
        
     @GetMapping("/notliked")
