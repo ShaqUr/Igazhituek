@@ -13,45 +13,52 @@ function submitMessage(e) {
 }
 
 function getMatches() {
-
-    // Get matches from server
-
     var matches = document.getElementById('matches');
 
     var fragment = document.createDocumentFragment();
 
-    for(var i = 0; i < 10; ++i) {
-        var li = document.createElement('li');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {       
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
 
-        var input = document.createElement('input');
-        input.type = 'radio';
-        input.name = 'match';
-        input.id = 'match_selector_' + i;
-        input.dataset.matchId = i;
-        if(i === 0) {
-            input.checked = true;
-            getMessages.call(input);
+            for(let user of data) {
+                var li = document.createElement('li');
+        
+                var input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'match';
+                input.id = 'match_selector_' + data.id;
+                input.dataset.matchId = data.id;
+                if(i === 0) {
+                    input.checked = true;
+                    //getMessages.call(input);
+                }
+                //input.addEventListener('change', getMessages);
+                li.appendChild(input);
+        
+                var label = document.createElement('label');
+                label.setAttribute('for', 'match_selector_' + data.id);
+        
+                var img = document.createElement('img');
+                img.src = 'https://avatars1.githubusercontent.com/u/22823703?s=40&v=4';
+                label.appendChild(img);
+        
+                var h1 = document.createElement('h1');
+                h1.appendChild(document.createTextNode(data.username));
+                label.appendChild(h1);
+        
+                li.appendChild(label);
+        
+                fragment.appendChild(li);
+            }
+        
+            matches.appendChild(fragment);
         }
-        input.addEventListener('change', getMessages);
-        li.appendChild(input);
-
-        var label = document.createElement('label');
-        label.setAttribute('for', 'match_selector_' + i);
-
-        var img = document.createElement('img');
-        img.src = 'https://avatars1.githubusercontent.com/u/22823703?s=40&v=4';
-        label.appendChild(img);
-
-        var h1 = document.createElement('h1');
-        h1.appendChild(document.createTextNode('Name'));
-        label.appendChild(h1);
-
-        li.appendChild(label);
-
-        fragment.appendChild(li);
-    }
-
-    matches.appendChild(fragment);
+    };
+    xhttp.open("POST", "/api/user/matches", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send('userID=' + getCookie('userid'));
 }
 
 function getMessages() {

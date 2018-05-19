@@ -80,9 +80,9 @@
                     
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4) {
+                        /*if (this.readyState == 4) {
                             console.log(this.status, this.responseText);
-                        }
+                        }*/
                     };
                     xhttp.open("POST", "/api/user/dislike", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -100,9 +100,9 @@
                     
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
-                            if (this.readyState == 4) {
+                            /*if (this.readyState == 4) {
                                 console.log(this.status, this.responseText);
-                            }
+                            }*/
                     };
                     xhttp.open("POST", "/api/user/like", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
