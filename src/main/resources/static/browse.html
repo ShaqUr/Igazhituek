@@ -68,11 +68,10 @@
             }
         </style>
 
-		<script src="script/login_check.js"></script>
+	<script src="script/login_check.js"></script>
+	<script src="script/fill_my_data.js"></script>
         <script>
             window.onload = function () {
-                //getMyData();
-
                 getUsers();
 
                 document.getElementById('dislike').onclick = function() {
@@ -167,20 +166,6 @@
                     }
                 };
                 xhttp.open("GET", "http://localhost:8080/api/user/notliked?userID=" + getCookie('userid'), true);
-                xhttp.send();
-            }
-
-            function getMyData() {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 /*&& this.status == 200*/) {
-                        var data = JSON.parse(this.responseText);
-
-                        document.querySelector('#my_data img').src = data.image;
-                        document.querySelector('#my_data h1').innerHTML = data.name;
-                    }
-                };
-                xhttp.open("GET", "user.json", true);
                 xhttp.send();
             }
         </script>

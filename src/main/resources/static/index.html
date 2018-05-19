@@ -92,6 +92,7 @@
 				if(this.status === 200) {
                                         var data = JSON.parse(this.responseText);
                                         document.cookie = 'userid=' + data.id;
+                                        document.cookie = 'username=' + data.username;
 					document.location = 'browse.html';
 				}
 				else {
