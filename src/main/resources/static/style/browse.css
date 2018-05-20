@@ -1,0 +1,59 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    background: #eee;
+}
+
+main {
+                    align-items: center;
+    display: flex;
+                    flex-grow: 1;
+                    justify-content: center;
+}
+
+main>button {
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    -webkit-appearance: none;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
+#cards {
+    position: relative;
+    width: 20em;
+    height: 32em;
+    display: inline-block;
+    margin: 1em;
+    padding: 0;
+}
+
+#cards li {
+    position: absolute;
+    box-sizing: border-box;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in;
+    transition-property: left, right, opacity;
+    left: 0;
+    right: 0;
+}
+
+#cards li.left {
+    left: auto;
+    right: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#cards li.right {
+    right: auto;
+    left: 100%;
+    opacity: 0;
+    pointer-events: none;
+}

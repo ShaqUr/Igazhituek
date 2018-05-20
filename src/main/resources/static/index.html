@@ -5,102 +5,10 @@
         <title>Keresztyén társkereső</title>
 
         <link href="https://fonts.googleapis.com/css?family=Cinzel|Lato&amp;subset=latin-ext" rel="stylesheet">
-        <style>
-            body {
-                background: rgb(137, 57, 94);
-                font-family: Lato;
-            }
-
-            form {
-                background: #fff;
-                box-shadow: 0 0 1000px hsl(332, 41%, 18%);
-
-                border-radius: .5em;
-
-                padding: 2em;
-
-                position: fixed;
-
-                top: 50%;
-                left: 50%;
-
-                transform: translate(-50%, -50%);
-                
-                text-align: center;
-            }
-
-            h1 {
-                margin: 0;
-                font-family: Cinzel;
-                text-align: center;
-            }
-
-            label {
-                display: block;
-                margin: 1em;
-                text-align: left;
-            }
-
-            label input {
-                background: #eee;
-                border-radius: 1em;
-                border: 0;
-                padding: .5em 1em;
-                margin-top: .5em;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            input {
-                display: block;
-                font: inherit;
-            }
-
-            input[type=submit] {
-                margin: 2em auto 1em auto;
-                -webkit-appearance: none;
-                border: 0;
-                cursor: pointer;
-                padding: .5em;
-                border-radius: .5em;
-            }
-
-            input:focus {
-                outline: none;
-            }
-        </style>
+        <link href="style/index.css" rel="stylesheet">
 
         <script src="script/common.js"></script>
-        
-        <script>
-            if(getCookie('userid') !== undefined) {
-                document.location = 'browse.html';
-            }
-
-            window.addEventListener('load', function () {
-                document.getElementById("login_form").addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() {
-                            if (this.readyState === 4) {
-                                    if(this.status === 200) {
-                                            var data = JSON.parse(this.responseText);
-                                            document.cookie = 'userid=' + data.id;
-                                            document.cookie = 'username=' + data.username;
-                                            document.location = 'browse.html';
-                                    }
-                                    else {
-                                            alert('nincs ilyen felh');
-                                    }
-                            }
-                    };
-                    xhttp.open("POST", "/api/user/login", true);
-                    xhttp.setRequestHeader("Content-type", "application/json");
-                    xhttp.send('{"username":"' + this.elements['username'].value + '","password":"' + this.elements['password'].value + '"}');
-                });
-            });
-        </script>
+        <script src="script/index.js"></script>
     </head>
     <body>
         <form id="login_form">
