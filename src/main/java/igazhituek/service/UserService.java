@@ -29,28 +29,29 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 @Data
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
-    @Autowired 
+
+    @Autowired
     private LikesRepository likesRepository;
-    
+
     @Autowired
     private DislikesRepository dislikesRepository;
-    
+
     public User login(User userLogged) throws UserNotValidException {
-        
+
         if (isValid(userLogged)) {
             User user = userRepository.findByUsername(userLogged.getUsername()).get();
             return user;
         }
         throw new UserNotValidException();
     }
+
     public User register(User user) throws UsernameOrEmailInUseException {
-        if(isUsernameInUse(user) || isEmailInUse(user)){
+        if (isUsernameInUse(user) || isEmailInUse(user)) {
             throw new UsernameOrEmailInUseException();
-        }else{
+        } else {
             user.setRole(USER);
             userRepository.save(user);
             return user;
@@ -61,25 +62,28 @@ public class UserService {
         System.out.println(user.getUsername());
         return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword()).isPresent();
     }
-    public boolean isBanned(User user){
-        return  userRepository.findByUsername(user.getUsername()).get().getRole().equals(User.Role.BANNED);
+
+    public boolean isBanned(User user) {
+        return userRepository.findByUsername(user.getUsername()).get().getRole().equals(User.Role.BANNED);
     }
-    public boolean isUsernameInUse(User user){
+
+    public boolean isUsernameInUse(User user) {
         return userRepository.findByUsername(user.getUsername()).isPresent();
     }
-    public boolean isEmailInUse(User user){
+
+    public boolean isEmailInUse(User user) {
         return userRepository.findByEmail(user.getEmail()).isPresent();
     }
 
-    
-    public Iterable<String> getUsernames(){
-        Set<String> s=new HashSet<>();
-        for(User u :this.userRepository.findAll()){
+    public Iterable<String> getUsernames() {
+        Set<String> s = new HashSet<>();
+        for (User u : this.userRepository.findAll()) {
             s.add(u.getUsername());
         }
         return s;
     }
-    public Iterable<String> getUsername(String username){
+
+    public Iterable<String> getUsername(String username) {
         Set<String> s = new HashSet<>();
         s.add(this.userRepository.findByUsername(username).get().getUsername());
         return s;
@@ -89,8 +93,6 @@ public class UserService {
         this.userRepository.findByUsername(username).get().setRole(BANNED);
         User u = this.userRepository.findByUsername(username).get();
         this.userRepository.save(u);
-        
     }
-    
-    
+
 }

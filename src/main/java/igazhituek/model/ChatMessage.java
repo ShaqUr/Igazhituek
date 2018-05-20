@@ -5,35 +5,30 @@
  */
 package igazhituek.model;
 
-
-import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
 /**
  *
  * @author Aram
- * 
+ *
  */
-
 @Entity
 @Table(name = "CHAT")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ChatMessage extends BaseEntity{
-    
-    int sender;
-    
-    int receiver;
-    
-    String message;
-    
-    long timestamp;
+public class ChatMessage extends BaseEntity {
+
+    private int sender;
+
+    private int receiver;
+
+    private String message;
+
+    private long timestamp;
 }

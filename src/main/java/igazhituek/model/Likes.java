@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
  *
  * @author Aram
  */
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Likes extends BaseEntity {
-    int liker;
-    int who;
+
+    private int liker;
+    private int who;
 }

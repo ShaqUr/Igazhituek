@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Dislikes extends BaseEntity {
-    int disliker;
-    int who;
+
+    private int disliker;
+    private int who;
 }
