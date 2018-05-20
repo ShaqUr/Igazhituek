@@ -88,7 +88,6 @@
                                             var data = JSON.parse(this.responseText);
                                             document.cookie = 'userid=' + data.id;
                                             document.cookie = 'username=' + data.username;
-                            document.cookie = 'picture=' + data.base64;
                                             document.location = 'browse.html';
                                     }
                                     else {

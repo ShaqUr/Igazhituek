@@ -48,6 +48,11 @@ main {
     background: hsl(332, 41%, 28%);
 }
 
+#matches img {
+    height: 64px;
+    width: 64px;
+}
+
 #matches h1 {
     font: inherit;
     margin: 0;

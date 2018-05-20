@@ -71,23 +71,7 @@ aside {
 	flex-basis: 20%;
 }
 
-#my_data {
-	display: flex;
-	align-items: center;
-	width: 100%;
-}
-
-#my_data>* {
-	vertical-align: middle;
-}
-
-#my_data img {
-	height: 3.5em;
-	width: auto;
-	margin-right: 1em;
-}
-
-#my_data h1 {
+#my_name {
 	margin: 0;
 	font-size: 1.5em;
 }
