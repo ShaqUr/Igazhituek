@@ -25,7 +25,7 @@ window.addEventListener('load', function() {
                     console.log(this.responseText);
                     var data = JSON.parse(this.responseText);
                     document.cookie = 'userid=' + data.id;
-                    document.cookie = 'username=' + elements['username'];
+                    document.cookie = 'username=' + data.username;
                     document.location = 'browse.html';
                 }
             };
